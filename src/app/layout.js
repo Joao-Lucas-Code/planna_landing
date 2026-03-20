@@ -1,22 +1,24 @@
-import './globals.css';
+import { Syne, DM_Sans } from "next/font/google";
+import "./globals.css";
 
-export const metadata = {
-  title: 'Planna.AI — Inteligência Financeira',
-  description: 'O primeiro agente de IA que realmente entende seu dinheiro',
-  icons: {
-    icon: '/favicon/favicon-96x96.png',
-    shortcut: '/favicon/favicon.ico',
-    apple: '/favicon/apple-touch-icon.png',
-  },
-  manifest: '/favicon/site.webmanifest',
-}
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-syne",
+  weight: ["700", "800"], // Pesos pesados para o título
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm",
+  weight: ["400", "500"],
+});
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className="scroll-smooth">
-      <body className="bg-black text-white antialiased">
+    <html lang="pt-BR" className={`${syne.variable} ${dmSans.variable}`}>
+      <body className="bg-black text-white antialiased font-dm">
         {children}
       </body>
     </html>
-  )
+  );
 }

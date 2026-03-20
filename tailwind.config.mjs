@@ -8,8 +8,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        dm: ['DM Sans', 'sans-serif'],
+        syne: ["var(--font-syne)", "sans-serif"],
+        dm: ["var(--font-dm)", "sans-serif"],
       },
       keyframes: {
         'fade-up': {

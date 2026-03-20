@@ -9,7 +9,7 @@ export default function Hero() {
         Inteligência Artificial + Finanças
       </div>
       
-      <h1 className="font-syne font-extrabold text-4xl md:text-7xl leading-[1.15] tracking-tight max-w-[960px] animate-fade-up animation-delay-200">
+      <h1 className="font-syne font-extrabold text-5xl md:text-8xl leading-[1.15] tracking-tight max-w-[960px] animate-fade-up animation-delay-200">
         O primeiro agente de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">IA</span> que realmente <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">entende seu dinheiro</span>
       </h1>
 
