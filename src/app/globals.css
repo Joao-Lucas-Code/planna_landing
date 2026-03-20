@@ -1,7 +1,21 @@
 @import "tailwindcss";
 
-/* O resto continua igual */
+/* ------------------------------------------------------------
+   PLANNA.AI — GLOBAL STYLES (Tailwind v4)
+   ------------------------------------------------------------ */
+
+@layer base {
+  body {
+    background-color: black;
+    color: white;
+    /* Garante que a fonte DM Sans seja a padrão */
+    font-family: var(--font-dm), sans-serif;
+    overflow-x: hidden;
+  }
+}
+
 @layer utilities {
+  /* --- EFEITOS 3D (FLIP CARDS) --- */
   .perspective-1000 {
     perspective: 1000px;
   }
@@ -14,31 +28,37 @@
   .rotate-y-180 {
     transform: rotateY(180deg);
   }
-}
 
-/* Se o @apply der erro de novo, use CSS puro aqui por enquanto */
-body {
-  background-color: black;
-  color: white;
-}
-
-@layer utilities {
+  /* --- ANIMAÇÃO DE REVELAÇÃO (REVEAL) --- */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
     animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
 
-  /* Delays para os elementos aparecerem em escadinha */
+  /* DELAYS PARA ESCADINHA (STAGGER) */
   .delay-100 { animation-delay: 100ms; }
   .delay-200 { animation-delay: 200ms; }
   .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
   .delay-500 { animation-delay: 500ms; }
+  .delay-600 { animation-delay: 600ms; }
+  .delay-700 { animation-delay: 700ms; }
+  .delay-800 { animation-delay: 800ms; }
+  .delay-1000 { animation-delay: 1000ms; }
 }
 
+/* --- DEFINIÇÃO DA ANIMAÇÃO REVEAL --- */
 @keyframes reveal {
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* --- ANIMAÇÃO DAS ORBS (FUNDO) --- */
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(var(--dx), var(--dy)) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
 }
