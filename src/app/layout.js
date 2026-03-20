@@ -1,3 +1,5 @@
+import './globals.css';
+
 export const metadata = {
   title: 'Planna.AI — Inteligência Financeira',
   description: 'O primeiro agente de IA que realmente entende seu dinheiro',

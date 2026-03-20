@@ -1,3 +1,6 @@
+@import "tailwindcss";
+
+/* O resto continua igual */
 @layer utilities {
   .perspective-1000 {
     perspective: 1000px;
@@ -11,4 +14,10 @@
   .rotate-y-180 {
     transform: rotateY(180deg);
   }
+}
+
+/* Se o @apply der erro de novo, use CSS puro aqui por enquanto */
+body {
+  background-color: black;
+  color: white;
 }
