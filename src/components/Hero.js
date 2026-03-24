@@ -6,15 +6,15 @@ export default function Hero() {
   const scrollToWaitlist = (e) => {
     if (e) e.preventDefault();
     
-    const element = document.getElementById('waitlist');
+    // Procura o ID ou desce para o final como plano B
+    const element = document.getElementById('waitlist') || document.querySelector('section form')?.parentElement;
     
     if (element) {
       const yOffset = -80; 
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
       window.scrollTo({ top: y, behavior: 'smooth' });
     } else {
-      console.error("Erro: Elemento #waitlist não encontrado!");
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
     }
   };
 
@@ -54,9 +54,41 @@ export default function Hero() {
         </button>
       </div>
 
-      {/* 5. Mockup */}
-      <div className="reveal delay-800 w-full flex justify-center">
-        <DashboardMockup />
+      {/* 5. Mockup com os Cards Flutuantes */}
+      <div className="reveal delay-800 w-full flex justify-center relative max-w-5xl">
+        {/* CARD FLUTUANTE 1 (Esquerda Topo) - Agora Roxo */}
+        <div className="hidden md:flex absolute -left-12 top-12 z-20 bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-2xl items-start gap-3 max-w-[260px] animate-[bounce_4s_infinite] text-left">
+          {/* Alterado de orange para purple aqui em baixo 👇 */}
+          <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 border border-purple-500/50">
+            <span className="text-sm">⚠️</span>
+          </div>
+          <div>
+            <p className="text-white text-sm font-bold font-syne mb-1">Alerta de cobrança</p>
+            <p className="text-gray-300 text-xs font-dm leading-relaxed">
+              Identifiquei uma cobrança duplicada de R$ 34,90 no iFood. Deseja contestar?
+            </p>
+          </div>
+        </div>
+
+        {/* CARD FLUTUANTE 2 (Direita Baixo) - Agora Rosa */}
+        <div className="hidden md:flex absolute -right-8 bottom-20 z-20 bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-2xl items-start gap-3 max-w-[260px] animate-[bounce_5s_infinite] text-left" style={{ animationDelay: '1s' }}>
+          {/* Alterado de green para pink aqui em baixo 👇 */}
+          <div className="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center shrink-0 border border-pink-500/50">
+            <span className="text-sm">💡</span>
+          </div>
+          <div>
+            <p className="text-white text-sm font-bold font-syne mb-1">Meta próxima!</p>
+            <p className="text-gray-300 text-xs font-dm leading-relaxed">
+              Sua reserva de emergência está 80% concluída. Faltam apenas R$ 450.
+            </p>
+          </div>
+        </div>
+
+        {/* O Mockup original do Dashboard */}
+        <div className="relative z-10 w-full">
+          <DashboardMockup />
+        </div>
+
       </div>
     </section>
   );
