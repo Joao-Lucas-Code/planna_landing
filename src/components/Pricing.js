@@ -28,7 +28,7 @@ export default function Pricing() {
     },
     {
       name: "Pro",
-      price: "R$ 19,90",
+      price: "R$ 9,90",
       period: "/mês",
       desc: "Para quem quer controle total.",
       features: ["Contas ilimitadas", "IA Avançada", "Alertas preditivos", "Análise de investimentos"],
