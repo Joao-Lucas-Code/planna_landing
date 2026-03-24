@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -11,18 +12,23 @@ export default function LeadForm() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  
+  // Instanciando o roteador do Next.js
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    
     const { error } = await supabase.from('cadastros_lp').insert([{ email }]);
+    
     if (error) {
       setMessage('Ops! Algo deu errado ou e-mail já cadastrado.');
+      setLoading(false);
     } else {
-      setMessage('Sucesso! Você está na lista de espera. 🎉');
-      setEmail('');
+      // Em vez de mostrar a mensagem, redireciona o usuário na hora!
+      router.push('/obrigado');
     }
-    setLoading(false);
   };
 
   return (
