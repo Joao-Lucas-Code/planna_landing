@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import LeadForm from '@/components/LeadForm';
 import Footer from '@/components/Footer';
 import FloatingOrbs from '@/components/FloatingOrbs';
+import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <div className="relative z-10">
         <Hero />          {/* PRECISA SER O PRIMEIRO */}
         <Features />      {/* Seção "Tudo sob controle" */}
+        <Testimonials />
         <Pricing />
         <LeadForm />     {/* Seção de capturar e-mail */}
         <FAQ />
