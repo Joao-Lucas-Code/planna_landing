@@ -10,19 +10,32 @@ export default function Obrigado() {
       <div className="relative z-10 animate-fade-in">
         <span className="text-6xl mb-6 block">🎉</span>
         <h1 className="font-syne font-extrabold text-4xl md:text-6xl mb-6">
-          Você está na lista VIP!
+          Acesso VIP Liberado!
         </h1>
         <p className="text-gray-400 text-lg md:text-xl max-w-lg mx-auto mb-10 font-dm">
-          Seu lugar está garantido. Assim que o Planna.AI for liberado, você será um dos primeiros a receber o acesso antecipado e seus <span className="text-white font-bold">14 dias grátis</span>.
+          Temos uma surpresa: a versão Beta do <span className="text-white font-bold">NovaFlow</span> acabou de sair do forno! Como você está na lista VIP, seus <span className="text-white font-bold">14 dias grátis</span> já estão disponíveis para uso imediato.
         </p>
 
-        {/* Botão para voltar */}
-        <Link 
-          href="/" 
-          className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-3 rounded-xl hover:bg-white/10 transition-colors font-medium"
-        >
-          ← Voltar para o início
-        </Link>
+        {/* Grupo de Botões */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          
+          {/* Botão Principal - Leva direto pro App */}
+          <a 
+            href="https://app.novaflow.me/register" 
+            className="inline-flex items-center gap-2 bg-purple-600 text-white px-8 py-4 rounded-xl hover:bg-purple-700 transition-all font-bold text-lg shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] scale-100 hover:scale-105"
+          >
+            Criar Conta e Acessar Agora 🚀
+          </a>
+
+          {/* Botão Secundário - Volta pro início */}
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-xl hover:bg-white/10 transition-colors font-medium"
+          >
+            Voltar para o início
+          </Link>
+          
+        </div>
       </div>
     </main>
   );
