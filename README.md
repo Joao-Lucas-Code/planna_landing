@@ -1,49 +1,18 @@
-# Planna Landing Page
+### 💎 NovaFlow (Planna AI)
 
-Landing page oficial do Planna.AI — O primeiro agente financeiro inteligente com IA.
+Plataforma full-stack de gestão financeira inteligente com agente de IA.
 
-## ✨ Sobre o Projeto
+**O que existe hoje:**
+- **Backend robusto**: Django REST Framework + JWT authentication, Cloudinary para mídias, arquitetura containerizada com Docker.
+- **Web App Demonstrativa**[](https://app.novaflow.me/): Interface completa e funcional construída para validação de produto, com:
+  - Dashboard com gráfico de evolução de gastos (curvas de Bézier)
+  - Sistema de alertas inteligentes por categoria (80% e 100% do limite)
+  - CRUD de transações + extrato filtrável
+  - Análise por categoria com barras de progresso
+  - Perfil com integração de dados do contrato de trabalho
 
-- Link: [novaflow.me](https://www.novaflow.me/)
-- Stack: Next.js 15 + Tailwind + TypeScript
-- Foco: Conversão + SEO + Apresentação clara do produto
+**Mobile App (React Native + Expo Router)**: Planejado / em desenvolvimento (interface responsiva já validada na versão web).
 
-## 🖼️ Screenshots
+**Infraestrutura**: Docker + Supabase (PostgreSQL) + Render (produção) + Cloudflare R2.
 
-(Colocar aqui os prints que vamos tirar)
-
-## 🚀 Tecnologias
-
-- Next.js (App Router)
-- Tailwind CSS
-- TypeScript
-- ...
-
-## 📦 Como rodar localmente
-
-...
-
-## 🔗 Links
-
-- Landing: https://www.novaflow.me/
-- App: https://app.novaflow.me/dashboard
-- Repositório do Backend
-- Repositório do Mobile
-
-### 📱 NovaFlow – App Mobile (React Native + Expo Router)
-
-Plataforma completa de gestão financeira inteligente com **agente de IA**, limites por categoria, alertas em tempo real e visualização avançada de dados.
-
-**Destaques técnicos:**
-- Gráficos com curvas de Bézier dinâmicas
-- Sistema de alertas inteligentes por categoria (80% / 100%)
-- CRUD completo de transações + filtros
-- Integração com backend Django + JWT
-
-**Screenshots:**
-
-| Dashboard Principal | Adicionar Gasto | Saúde por Categoria | Extrato |
-|---------------------|-----------------|---------------------|---------|
-| ![Dashboard](https://assets.grok.com/users/033fa096-8233-4cb8-a708-3d8927795ee3/e2d1fb4d-019a-4e59-856f-f3d670781b88/content) | ![Novo Gasto](https://assets.grok.com/users/033fa096-8233-4cb8-a708-3d8927795ee3/c4b2e2e1-8f25-417d-8d70-a29c2f0c34b5/content) | ![Saúde](https://assets.grok.com/users/033fa096-8233-4cb8-a708-3d8927795ee3/2c2889db-5def-423e-8bbb-4f846b1b474d/content) | ![Extrato](https://assets.grok.com/users/033fa096-8233-4cb8-a708-3d8927795ee3/13a6f38f-621b-4db2-bb61-87f92fe09ad2/content) |
-
-**Link da Landing Page:** [novaflow.me](https://novaflow.me)
+**Tecnologias principais**: Python, Django, React (Web Demo), PostgreSQL, Docker, JWT, Cloudinary.
