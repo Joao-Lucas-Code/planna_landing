@@ -10,7 +10,7 @@ export default function CTA() {
           Seu dinheiro merece <br/> inteligência de verdade
         </h2>
         <p className="text-gray-400 max-w-xl mx-auto mb-10 text-lg">
-          Junte-se a mais de 12.000 pessoas que já transformaram sua vida financeira com o PlannaIA.
+          Junte-se a mais de 12.000 pessoas que já transformaram sua vida financeira com o Planna.IA.
         </p>
         
         <button className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(139,92,246,0.3)]">

@@ -3,12 +3,12 @@ import { useState } from 'react';
 
 const faqData = [
   {
-    question: "O PlannaIA é seguro para conectar minha conta bancária?",
+    question: "O Planna.IA é seguro para conectar minha conta bancária?",
     answer: "Sim. A segurança é a nossa infraestrutura base. Utilizamos o Open Finance regulamentado pelo Banco Central com criptografia AES-256 de ponta a ponta. A nossa IA possui acesso estritamente de leitura (read-only) para gerar insights — nós nunca movimentamos seu dinheiro."
   },
   {
     question: "A inteligência artificial pode fazer pagamentos por mim?",
-    answer: "Não. O PlannaIA atua como o seu copiloto financeiro analítico. Ele categoriza gastos, identifica padrões e sugere otimizações, mas a movimentação do dinheiro e a palavra final continuam 100% nas suas mãos."
+    answer: "Não. O Planna.IA atua como o seu copiloto financeiro analítico. Ele categoriza gastos, identifica padrões e sugere otimizações, mas a movimentação do dinheiro e a palavra final continuam 100% nas suas mãos."
   },
   {
     question: "Quais bancos e corretoras são suportados?",

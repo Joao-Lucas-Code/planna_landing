@@ -5,7 +5,7 @@ export default function Footer() {
         
         <div className="flex flex-col gap-3 items-center md:items-start">
           <div className="font-syne font-extrabold text-2xl tracking-tighter bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            PlannaIA
+            Planna.IA
           </div>
           <span className="text-gray-600 text-[11px]">
             © 2026 NovaFlow · Todos os direitos reservados

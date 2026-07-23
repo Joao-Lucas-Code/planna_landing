@@ -17,7 +17,7 @@ export default function Testimonials() {
     {
       name: "Rafaela",
       role: "Beta Tester",
-      text: "Eu usava três apps diferentes para acompanhar contas e investimentos. O PlannaIA unificou tudo e os insights da inteligência artificial são muito precisos.",
+      text: "Eu usava três apps diferentes para acompanhar contas e investimentos. O Planna.IA unificou tudo e os insights da inteligência artificial são muito precisos.",
       initial: "R"
     }
   ];

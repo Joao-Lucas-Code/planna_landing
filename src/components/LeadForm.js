@@ -51,7 +51,7 @@ export default function LeadForm() {
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-purple-500/10 blur-[80px] rounded-full pointer-events-none" />
         <h2 className="font-syne font-bold text-2xl md:text-4xl mb-4 text-white">Garanta seu lugar</h2>
         <p className="text-gray-400 mb-8 text-sm md:text-base font-dm">
-          Seja o primeiro a saber quando o PlannaIA for lançado e garanta seus <span className="text-white font-bold">14 dias grátis</span>.
+          Seja o primeiro a saber quando a Planna.IA for lançada e garanta seus <span className="text-white font-bold">14 dias grátis</span>.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 relative z-10">
           <input 

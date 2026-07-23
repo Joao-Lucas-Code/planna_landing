@@ -34,7 +34,7 @@ export default function Hero() {
 
       {/* 3. Subtítulo */}
       <p className="reveal delay-400 mt-6 text-gray-400 text-lg md:text-xl max-w-[560px] leading-relaxed font-dm">
-        O PlannaIA analisa seus gastos, otimiza seus investimentos e entrega insights em tempo real — tudo numa interface intuitiva e poderosa.
+        O Planna.IA analisa seus gastos, otimiza seus investimentos e entrega insights em tempo real — tudo numa interface intuitiva e poderosa.
       </p>
 
       {/* 4. Botões */}
