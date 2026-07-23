@@ -1,6 +1,7 @@
 'use client';
 
 import DashboardMockup from './DashboardMockup';
+import HeroOrbit from './HeroOrbit';
 
 export default function Hero() {
   const scrollToWaitlist = (e) => {
@@ -20,25 +21,28 @@ export default function Hero() {
 
   return (
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center text-center px-[5%] pt-28 relative overflow-hidden">
-      
+
+      {/* Objeto abstrato de fundo (CSS puro, decorativo) */}
+      <HeroOrbit />
+
       {/* 1. Badge */}
-      <div className="reveal inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-500 px-4 py-1.5 rounded-full text-[0.78rem] font-medium uppercase tracking-widest mb-8">
+      <div className="reveal relative z-10 inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-500 px-4 py-1.5 rounded-full text-[0.78rem] font-medium uppercase tracking-widest mb-8">
         <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
         Inteligência Artificial + Finanças
       </div>
       
       {/* 2. Título */}
-      <h1 className="reveal delay-200 font-syne font-extrabold text-5xl md:text-8xl leading-[1.15] tracking-tight max-w-[960px]">
+      <h1 className="reveal delay-200 relative z-10 font-syne font-extrabold text-5xl md:text-8xl leading-[1.15] tracking-tight max-w-[960px]">
         O primeiro agente de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">IA</span> que realmente <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-violet-500">entende seu dinheiro</span>
       </h1>
 
       {/* 3. Subtítulo */}
-      <p className="reveal delay-400 mt-6 text-gray-400 text-lg md:text-xl max-w-[560px] leading-relaxed font-dm">
+      <p className="reveal delay-400 relative z-10 mt-6 text-gray-400 text-lg md:text-xl max-w-[560px] leading-relaxed font-dm">
         O Planna.IA analisa seus gastos, otimiza seus investimentos e entrega insights em tempo real — tudo numa interface intuitiva e poderosa.
       </p>
 
       {/* 4. Botões */}
-      <div className="reveal delay-600 mt-10 mb-16 flex flex-col md:flex-row gap-4 items-center">
+      <div className="reveal delay-600 relative z-10 mt-10 mb-16 flex flex-col md:flex-row gap-4 items-center">
         <button 
           onClick={scrollToWaitlist}
           className="bg-gradient-to-r from-blue-500 to-violet-500 px-8 py-3 rounded-xl font-medium shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:scale-105 transition-transform text-white cursor-pointer"

@@ -62,3 +62,90 @@
   50% { transform: translate(var(--dx), var(--dy)) scale(1.05); }
   100% { transform: translate(0, 0) scale(1); }
 }
+/* ------------------------------------------------------------
+   HERO ORBIT — objeto abstrato CSS puro (estilo Resend)
+   3 aneis inclinados (rotateX) girando em velocidades/sentidos
+   diferentes + nucleo de glow. Sem libs, sem JS.
+   ------------------------------------------------------------ */
+.hero-orbit {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(260px, 42vw, 540px);
+  height: clamp(260px, 42vw, 540px);
+  pointer-events: none;
+  z-index: 0;
+  animation: orbitFloat 9s ease-in-out infinite;
+}
+
+/* Nucleo: glow suave azul→roxo, sem forma definida */
+.orbit-core {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    rgba(139, 92, 246, 0.35),
+    rgba(59, 130, 246, 0.12) 60%,
+    transparent 72%
+  );
+  filter: blur(8px);
+}
+
+/* Aneis: borda em gradiente via truque padding-box/border-box.
+   rotateX(68deg) da o efeito de orbital 3D; o spin e no eixo Z. */
+.orbit-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  transform: rotateX(68deg);
+  animation: orbitSpin 18s linear infinite;
+}
+
+.orbit-ring-1 {
+  width: 55%;
+  height: 55%;
+  background: linear-gradient(#09090B, #09090B) padding-box,
+    linear-gradient(90deg, rgba(59, 130, 246, 0.7), rgba(139, 92, 246, 0.15)) border-box;
+}
+
+.orbit-ring-2 {
+  width: 76%;
+  height: 76%;
+  background: linear-gradient(#09090B, #09090B) padding-box,
+    linear-gradient(90deg, rgba(139, 92, 246, 0.55), rgba(255, 255, 255, 0.06)) border-box;
+  animation-duration: 26s;
+  animation-direction: reverse;
+}
+
+.orbit-ring-3 {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#09090B, #09090B) padding-box,
+    linear-gradient(90deg, rgba(250, 250, 250, 0.18), rgba(59, 130, 246, 0.08)) border-box;
+  animation-duration: 34s;
+}
+
+@keyframes orbitSpin {
+  from { transform: rotateX(68deg) rotate(0deg); }
+  to   { transform: rotateX(68deg) rotate(360deg); }
+}
+
+@keyframes orbitFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-16px); }
+}
+
+/* Acessibilidade: desliga as animacoes para quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .hero-orbit,
+  .orbit-ring {
+    animation: none;
+  }
+}
