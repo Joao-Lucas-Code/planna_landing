@@ -1,5 +1,6 @@
 'use client'; // Obrigatório para Client Components
 import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 
 export default function DashboardMockup() {
   // Valores das alturas das barras (em porcentagem para Flexbox)
@@ -72,9 +73,11 @@ export default function DashboardMockup() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.5 }}
-          className="mt-4 flex items-center gap-3 bg-purple-500/10 border border-purple-500/20 rounded-xl p-3"
+          className="mt-4 flex items-center gap-3 bg-violet-500/10 border border-violet-500/20 rounded-xl p-3"
         >
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-xs text-white">✦</div>
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-violet-500 rounded-lg flex items-center justify-center shrink-0">
+            <Sparkles size={16} className="text-white" />
+          </div>
           <p className="text-[11px] text-[#6b6b8a] text-left leading-relaxed font-dm">
             <strong className="text-white">IA detectou uma oportunidade:</strong> Seus gastos com alimentação subiram 23%. Reduzindo R$ 300/mês, você pode alcançar sua meta em 4 meses.
           </p>

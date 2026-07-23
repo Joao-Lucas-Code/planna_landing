@@ -1,5 +1,7 @@
 'use client';
 
+import { Star } from 'lucide-react';
+
 export default function Testimonials() {
   const testimonials = [
     {
@@ -38,17 +40,19 @@ export default function Testimonials() {
           {testimonials.map((item, index) => (
             <div 
               key={index} 
-              className="reveal p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
+              className="reveal p-8 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.06] transition-colors"
               style={{ transitionDelay: `${index * 150}ms` }}
             >
-              <div className="flex gap-1 mb-6 text-pink-500 text-sm">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              <div className="flex gap-1 mb-6 text-violet-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
+                ))}
               </div>
               <p className="text-gray-300 text-sm md:text-base leading-relaxed font-dm mb-8 italic">
                 "{item.text}"
               </p>
               <div className="flex items-center gap-4 mt-auto">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold font-syne shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white font-bold font-syne shrink-0">
                   {item.initial}
                 </div>
                 <div>

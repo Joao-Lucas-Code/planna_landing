@@ -13,7 +13,7 @@ export default function CTA() {
           Junte-se a mais de 12.000 pessoas que já transformaram sua vida financeira com o Planna.IA.
         </p>
         
-        <button className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(139,92,246,0.3)]">
+        <button className="bg-gradient-to-r from-blue-500 to-violet-500 px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(139,92,246,0.12)]">
           Criar conta gratuita →
         </button>
         

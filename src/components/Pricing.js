@@ -1,5 +1,7 @@
 'use client';
 
+import { Check } from 'lucide-react';
+
 export default function Pricing() {
   const scrollToWaitlist = () => {
     const element = document.getElementById('waitlist');
@@ -47,8 +49,8 @@ export default function Pricing() {
             key={i} 
             className={`reveal p-8 rounded-2xl border w-full max-w-xs text-left transition-transform hover:scale-105 ${
               plan.featured 
-                ? 'border-purple-500 bg-purple-500/5 shadow-[0_0_40px_rgba(139,92,246,0.1)]' 
-                : 'border-white/10 bg-white/5'
+                ? 'border-violet-500 bg-violet-500/5' 
+                : 'border-white/[0.08] bg-white/[0.03]'
             }`}
             style={{ transitionDelay: `${i * 200}ms` }}
           >
@@ -61,7 +63,7 @@ export default function Pricing() {
             <ul className="space-y-3 mb-8">
               {plan.features.map((f, j) => (
                 <li key={j} className="text-sm text-gray-300 flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> {f}
+                  <Check size={14} className="text-blue-500 shrink-0" /> {f}
                 </li>
               ))}
             </ul>
@@ -69,8 +71,8 @@ export default function Pricing() {
               onClick={scrollToWaitlist}
               className={`w-full py-3 rounded-xl font-bold transition-all ${
                 plan.featured 
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-purple-500/20' 
-                  : 'border border-white/10 text-white hover:bg-white/10'
+                  ? 'bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-lg shadow-violet-500/10' 
+                  : 'border border-white/[0.08] text-white hover:bg-white/10'
               }`}
             >
               {plan.cta}

@@ -10,7 +10,7 @@ import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   return (
-    <main className="bg-black min-h-screen text-white">
+    <main className="bg-[#09090B] min-h-screen text-white">
       {/* Elementos fixos de fundo e navegação */}
       <FloatingOrbs />
       <Navbar />

@@ -42,7 +42,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${syne.variable} ${dmSans.variable}`}>
-      <body className="bg-black text-white antialiased font-dm">
+      <body className="bg-[#09090B] text-white antialiased font-dm">
         {children}
         {/* Componentes da Vercel para monitoramento de tráfego e velocidade */}
         <Analytics />

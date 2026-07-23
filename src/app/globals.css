@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    background-color: black;
+    background-color: #09090B;
     color: white;
     /* Garante que a fonte DM Sans seja a padrão */
     font-family: var(--font-dm), sans-serif;

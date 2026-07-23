@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-end gap-10">
         
         <div className="flex flex-col gap-3 items-center md:items-start">
-          <div className="font-syne font-extrabold text-2xl tracking-tighter bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+          <div className="font-syne font-extrabold text-2xl tracking-tighter bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">
             Planna.IA
           </div>
           <span className="text-gray-600 text-[11px]">

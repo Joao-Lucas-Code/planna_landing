@@ -55,7 +55,7 @@ export default function LeadForm() {
 
   return (
     <section id="waitlist" className="py-32 px-[5%] flex justify-center scroll-mt-20">
-      <div className="reveal w-full max-w-xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 p-8 md:p-12 rounded-3xl text-center relative overflow-hidden">
+      <div className="reveal w-full max-w-xl bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.08] p-8 md:p-12 rounded-3xl text-center relative overflow-hidden">
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-purple-500/10 blur-[80px] rounded-full pointer-events-none" />
         <h2 className="font-syne font-bold text-2xl md:text-4xl mb-4 text-white">Garanta seu lugar</h2>
         <p className="text-gray-400 mb-8 text-sm md:text-base font-dm">
@@ -68,12 +68,12 @@ export default function LeadForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-purple-500 transition-all font-dm"
+            className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white outline-none focus:border-violet-500 transition-all font-dm"
           />
           <button 
             type="submit" 
             disabled={loading}
-            className="bg-gradient-to-r from-blue-500 to-purple-500 px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform disabled:opacity-50 text-white shadow-lg shadow-purple-500/20"
+            className="bg-gradient-to-r from-blue-500 to-violet-500 px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform disabled:opacity-50 text-white shadow-lg shadow-violet-500/10"
           >
             {loading ? 'Enviando...' : 'Entrar na lista'}
           </button>

@@ -10,8 +10,7 @@ const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
     </linearGradient>
     <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#3b82f6"/>
-      <stop offset="0.5" stop-color="#a855f7"/>
-      <stop offset="1" stop-color="#ec4899"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
     </linearGradient>
     <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
       <stop offset="0" stop-color="#a855f7" stop-opacity="0.35"/>
