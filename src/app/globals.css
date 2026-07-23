@@ -65,7 +65,9 @@
 /* ------------------------------------------------------------
    HERO ORBIT — objeto abstrato CSS puro (estilo Resend)
    3 aneis inclinados (rotateX) girando em velocidades/sentidos
-   diferentes + nucleo de glow. Sem libs, sem JS.
+   diferentes + nucleo de glow difuso. Sem libs, sem JS.
+   Os aneis usam borda rgba DIRETA (sem preenchimento) — o truque
+   padding-box criava um disco escuro ("buraco") atras do titulo.
    ------------------------------------------------------------ */
 .hero-orbit {
   position: absolute;
@@ -79,31 +81,31 @@
   animation: orbitFloat 9s ease-in-out infinite;
 }
 
-/* Nucleo: glow suave azul→roxo, sem forma definida */
+/* Nucleo: glow bem difuso azul→roxo, sem forma definida */
 .orbit-core {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 30%;
-  height: 30%;
+  width: 45%;
+  height: 45%;
   border-radius: 50%;
   background: radial-gradient(
-    circle at 35% 30%,
-    rgba(139, 92, 246, 0.35),
-    rgba(59, 130, 246, 0.12) 60%,
-    transparent 72%
+    circle at 40% 35%,
+    rgba(139, 92, 246, 0.28),
+    rgba(59, 130, 246, 0.10) 55%,
+    transparent 70%
   );
-  filter: blur(8px);
+  filter: blur(30px);
 }
 
-/* Aneis: borda em gradiente via truque padding-box/border-box.
+/* Aneis: apenas a borda, sem fundo — o interior fica transparente.
    rotateX(68deg) da o efeito de orbital 3D; o spin e no eixo Z. */
 .orbit-ring {
   position: absolute;
   inset: 0;
   margin: auto;
   border-radius: 50%;
-  border: 1px solid transparent;
+  border: 1px solid rgba(139, 92, 246, 0.18);
   transform: rotateX(68deg);
   animation: orbitSpin 18s linear infinite;
 }
@@ -111,15 +113,13 @@
 .orbit-ring-1 {
   width: 55%;
   height: 55%;
-  background: linear-gradient(#09090B, #09090B) padding-box,
-    linear-gradient(90deg, rgba(59, 130, 246, 0.7), rgba(139, 92, 246, 0.15)) border-box;
+  border-color: rgba(59, 130, 246, 0.20);
 }
 
 .orbit-ring-2 {
   width: 76%;
   height: 76%;
-  background: linear-gradient(#09090B, #09090B) padding-box,
-    linear-gradient(90deg, rgba(139, 92, 246, 0.55), rgba(255, 255, 255, 0.06)) border-box;
+  border-color: rgba(139, 92, 246, 0.16);
   animation-duration: 26s;
   animation-direction: reverse;
 }
@@ -127,8 +127,7 @@
 .orbit-ring-3 {
   width: 100%;
   height: 100%;
-  background: linear-gradient(#09090B, #09090B) padding-box,
-    linear-gradient(90deg, rgba(250, 250, 250, 0.18), rgba(59, 130, 246, 0.08)) border-box;
+  border-color: rgba(250, 250, 250, 0.10);
   animation-duration: 34s;
 }
 

@@ -20,7 +20,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="min-h-screen flex flex-col items-center justify-center text-center px-[5%] pt-28 relative overflow-hidden">
+    <section id="hero" className="min-h-screen flex flex-col items-center justify-center text-center px-[5%] pt-28 pb-16 relative overflow-hidden">
 
       {/* Objeto abstrato de fundo (CSS puro, decorativo) */}
       <HeroOrbit />
@@ -42,7 +42,7 @@ export default function Hero() {
       </p>
 
       {/* 4. Botões */}
-      <div className="reveal delay-600 relative z-10 mt-10 mb-16 flex flex-col md:flex-row gap-4 items-center">
+      <div className="reveal delay-600 relative z-10 mt-10 flex flex-col md:flex-row gap-4 items-center">
         <button 
           onClick={scrollToWaitlist}
           className="bg-gradient-to-r from-blue-500 to-violet-500 px-8 py-3 rounded-xl font-medium shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:scale-105 transition-transform text-white cursor-pointer"
@@ -59,7 +59,7 @@ export default function Hero() {
       </div>
 
       {/* 5. Mockup do Dashboard */}
-      <div className="reveal delay-800 w-full flex justify-center relative max-w-5xl">
+      <div className="reveal delay-800 w-full flex justify-center relative max-w-5xl mt-16 mb-20">
         <div className="relative z-10 w-full">
           <DashboardMockup />
         </div>
