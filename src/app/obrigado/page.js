@@ -13,7 +13,7 @@ export default function Obrigado() {
           Acesso VIP Liberado!
         </h1>
         <p className="text-gray-400 text-lg md:text-xl max-w-lg mx-auto mb-10 font-dm">
-          Temos uma surpresa: a versão Beta do <span className="text-white font-bold">NovaFlow</span> acabou de sair do forno! Como você está na lista VIP, seus <span className="text-white font-bold">14 dias grátis</span> já estão disponíveis para uso imediato.
+          Temos uma surpresa: a versão Beta do <span className="text-white font-bold">PlannaIA</span> acabou de sair do forno! Como você está na lista VIP, seus <span className="text-white font-bold">14 dias grátis</span> já estão disponíveis para uso imediato.
         </p>
 
         {/* Grupo de Botões */}

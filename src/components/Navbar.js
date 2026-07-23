@@ -23,7 +23,7 @@ export default function Navbar() {
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         className="font-syne font-extrabold text-xl tracking-tighter bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent cursor-pointer"
       >
-        Planna.AI
+        PlannaIA
       </div>
       
       <ul className="hidden md:flex gap-10 list-none">

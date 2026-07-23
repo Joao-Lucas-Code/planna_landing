@@ -17,8 +17,8 @@ const dmSans = DM_Sans({
 
 // AQUI ESTÁ A MÁGICA DO SEO E DOS FAVICONS
 export const metadata = {
-  title: 'Planna.AI | O seu agente financeiro inteligente',
-  description: 'Analise seus gastos, otimize seus investimentos e receba insights em tempo real com inteligência artificial.',
+  title: 'PlannaIA - Gestão Financeira com IA | NovaFlow',
+  description: 'O PlannaIA analisa seus gastos, otimiza seus investimentos e entrega insights em tempo real com inteligência artificial. Um produto da NovaFlow.',
   icons: {
     icon: [
       { url: '/favicon/favicon.ico' },
@@ -29,13 +29,13 @@ export const metadata = {
   },
   manifest: '/favicon/site.webmanifest',
   openGraph: {
-    title: 'Planna.AI | O seu agente financeiro inteligente',
-    description: 'A revolução das suas finanças chegou. Entre na lista de espera.',
+    title: 'PlannaIA - Sua gestão financeira inteligente',
+    description: 'A revolução das suas finanças chegou. Entre na lista de espera do PlannaIA, o agente financeiro com IA da NovaFlow.',
     url: 'https://novaflow.me',
-    siteName: 'Planna.AI',
+    siteName: 'PlannaIA',
     locale: 'pt_BR',
     type: 'website',
-    images: [{ url: 'https://novaflow.me/og-image.png', width: 1200, height: 630, alt: 'Planna.AI — O seu agente financeiro inteligente' }],
+    images: [{ url: 'https://novaflow.me/og-image.png', width: 1200, height: 630, alt: 'PlannaIA — Gestão financeira inteligente, um produto NovaFlow' }],
   },
 };
 

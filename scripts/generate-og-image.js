@@ -21,9 +21,9 @@ const svg = `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="url(#bg)"/>
   <circle cx="1000" cy="120" r="320" fill="url(#glow)"/>
   <circle cx="150" cy="540" r="280" fill="url(#glow)"/>
-  <text x="600" y="290" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="bold" fill="url(#brand)" text-anchor="middle">Planna.AI</text>
-  <text x="600" y="380" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#d1d5db" text-anchor="middle">O seu agente financeiro inteligente</text>
-  <text x="600" y="450" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#6b7280" text-anchor="middle">Analise gastos, otimize investimentos e receba insights em tempo real</text>
+  <text x="600" y="290" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="bold" fill="url(#brand)" text-anchor="middle">PlannaIA</text>
+  <text x="600" y="380" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#d1d5db" text-anchor="middle">Gestão financeira inteligente</text>
+  <text x="600" y="450" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#6b7280" text-anchor="middle">Um produto NovaFlow</text>
 </svg>`;
 
 sharp(Buffer.from(svg))
