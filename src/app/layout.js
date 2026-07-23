@@ -35,6 +35,7 @@ export const metadata = {
     siteName: 'Planna.AI',
     locale: 'pt_BR',
     type: 'website',
+    images: [{ url: 'https://novaflow.me/og-image.png', width: 1200, height: 630, alt: 'Planna.AI — O seu agente financeiro inteligente' }],
   },
 };
 

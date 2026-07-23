@@ -18,12 +18,26 @@ export default function LeadForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Normaliza e valida antes de falar com o Supabase
+    const cleanEmail = email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setMessage('Digite um e-mail válido.');
+      return;
+    }
+
     setLoading(true);
-    
-    const { error } = await supabase.from('cadastros_lp').insert([{ email }]);
-    
+    setMessage('');
+
+    const { error } = await supabase.from('cadastros_lp').insert([{ email: cleanEmail }]);
+
     if (error) {
-      setMessage('Ops! Algo deu errado ou e-mail já cadastrado.');
+      // 23505 = unique violation (e-mail ja cadastrado); 409 = conflito do PostgREST
+      if (error.code === '23505' || error.status === 409) {
+        setMessage('Você já está na lista!');
+      } else {
+        setMessage('Ops! Algo deu errado. Tente novamente.');
+      }
       setLoading(false);
     } else {
       // Em vez de mostrar a mensagem, redireciona o usuário na hora!
