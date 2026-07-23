@@ -40,6 +40,14 @@ export default function LeadForm() {
       }
       setLoading(false);
     } else {
+      // Email de boas-vindas em fire-and-forget: nao bloqueia o redirect.
+      // Se o backend falhar, o lead ja esta salvo no Supabase e a experiencia nao muda.
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://novaflow-backend.onrender.com'}/api/leads/welcome/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail }),
+      }).catch(() => {});
+
       // Em vez de mostrar a mensagem, redireciona o usuário na hora!
       router.push('/obrigado');
     }
