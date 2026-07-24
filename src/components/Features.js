@@ -38,7 +38,7 @@ export default function Features() {
         </ScrollReveal>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
         {featuresData.map((feat, index) => (
           <ScrollReveal key={index} delay={index * 0.1}>
             <FeatureCard {...feat} />
