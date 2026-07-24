@@ -1,6 +1,7 @@
 'use client';
 
 import { Check } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 export default function Pricing() {
   const scrollToWaitlist = () => {
@@ -41,19 +42,20 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="py-24 px-[5%] text-center">
-      <h2 className="reveal font-syne font-bold text-3xl md:text-5xl mb-16">Simples e transparente</h2>
+      <ScrollReveal>
+        <h2 className="font-syne font-bold text-3xl md:text-5xl mb-16">Simples e transparente</h2>
+      </ScrollReveal>
       
       <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
         {plans.map((plan, i) => (
-          <div 
-            key={i} 
-            className={`reveal p-8 rounded-2xl border w-full max-w-xs text-left transition-transform hover:scale-105 ${
-              plan.featured 
-                ? 'border-violet-500 bg-violet-500/5' 
-                : 'border-white/[0.08] bg-white/[0.03]'
-            }`}
-            style={{ transitionDelay: `${i * 200}ms` }}
-          >
+          <ScrollReveal key={i} delay={i * 0.15} className="w-full max-w-xs">
+            <div 
+              className={`p-8 rounded-2xl border w-full text-left transition-transform hover:scale-105 ${
+                plan.featured 
+                  ? 'border-violet-500 bg-violet-500/5 scale-[1.02] shadow-[0_0_60px_rgba(139,92,246,0.15)]' 
+                  : 'border-white/[0.08] bg-white/[0.03]'
+              }`}
+            >
             <span className="text-xs uppercase tracking-widest text-gray-500">{plan.name}</span>
             <div className="font-syne font-bold text-4xl mt-4 mb-2">
               {plan.price}
@@ -77,7 +79,8 @@ export default function Pricing() {
             >
               {plan.cta}
             </button>
-          </div>
+            </div>
+          </ScrollReveal>
         ))}
       </div>
     </section>

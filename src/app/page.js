@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import Stats from '@/components/Stats';
 import Features from '@/components/Features';
 import Pricing from '@/components/Pricing';
 import FAQ from '@/components/FAQ';
@@ -18,11 +19,12 @@ export default function Home() {
       {/* Conteúdo da página - A ordem aqui define o que aparece primeiro */}
       <div className="relative z-10">
         <Hero />          {/* PRECISA SER O PRIMEIRO */}
+        <Stats />         {/* Números de prova social com contagem animada */}
         <Features />      {/* Seção "Tudo sob controle" */}
         <Testimonials />
         <Pricing />
-        <LeadForm />     {/* Seção de capturar e-mail */}
         <FAQ />
+        <LeadForm />     {/* CTA final: capturar e-mail (antes do footer) */}
       </div>
       
       <Footer />

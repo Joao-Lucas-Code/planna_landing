@@ -1,6 +1,7 @@
 'use client';
 
 import { Star } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 export default function Testimonials() {
   const testimonials = [
@@ -25,41 +26,46 @@ export default function Testimonials() {
   ];
 
   return (
-    <section id="testimonials" className="py-24 px-[5%] bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
+    <section id="testimonials" className="py-24 px-[5%] bg-[#131316] border-y border-white/[0.08]">
       <div className="max-w-6xl mx-auto">
         
-        <div className="text-center mb-16 reveal">
-          <span className="text-blue-500 text-xs font-bold uppercase tracking-widest">Prova Social</span>
-          <h2 className="font-syne font-bold text-3xl md:text-5xl mt-4 mb-4">O que dizem os primeiros usuários</h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto font-dm">
-            Veja o que as pessoas que já tiveram acesso antecipado estão achando do nosso agente financeiro.
-          </p>
+        <div className="text-center mb-16">
+          <ScrollReveal>
+            <span className="text-blue-500 text-xs font-bold uppercase tracking-widest">Prova Social</span>
+            <h2 className="font-syne font-bold text-3xl md:text-5xl mt-4 mb-4">O que dizem os primeiros usuários</h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto font-dm">
+              Veja o que as pessoas que já tiveram acesso antecipado estão achando do nosso agente financeiro.
+            </p>
+          </ScrollReveal>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((item, index) => (
             <div 
               key={index} 
-              className="reveal p-8 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.06] transition-colors"
-              style={{ transitionDelay: `${index * 150}ms` }}
+              className="p-8 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.06] transition-colors"
             >
-              <div className="flex gap-1 mb-6 text-violet-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
-                ))}
-              </div>
-              <p className="text-gray-300 text-sm md:text-base leading-relaxed font-dm mb-8 italic">
-                "{item.text}"
-              </p>
-              <div className="flex items-center gap-4 mt-auto">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white font-bold font-syne shrink-0">
-                  {item.initial}
+              <ScrollReveal delay={index * 0.15}>
+                <div className="flex gap-1 mb-6 text-violet-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
+                  ))}
                 </div>
-                <div>
-                  <h4 className="text-white font-bold text-sm">{item.name}</h4>
-                  <p className="text-gray-500 text-xs">{item.role}</p>
+                <p className="text-gray-300 text-sm md:text-base leading-relaxed font-dm mb-8 italic">
+                  "{item.text}"
+                </p>
+              </ScrollReveal>
+              <ScrollReveal delay={index * 0.15 + 0.2} direction="fade">
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white font-bold font-syne shrink-0">
+                    {item.initial}
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-sm">{item.name}</h4>
+                    <p className="text-gray-500 text-xs">{item.role}</p>
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             </div>
           ))}
         </div>

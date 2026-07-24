@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 const faqData = [
   {
@@ -23,7 +24,7 @@ const faqData = [
 
 function FAQItem({ question, answer, isOpen, onClick }) {
   return (
-    <div className="border-b border-white/5 reveal">
+    <div className="border-b border-white/5">
       <button 
         className="w-full py-6 flex justify-between items-center text-left hover:text-blue-400 transition-colors cursor-pointer"
         onClick={onClick}
@@ -44,22 +45,27 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section id="faq" className="py-24 px-[5%] max-w-3xl mx-auto scroll-mt-20">
-      <div className="text-center mb-12 reveal">
-        <span className="text-violet-400 text-xs font-bold uppercase tracking-widest">Dúvidas</span>
-        <h2 className="font-syne font-bold text-3xl md:text-5xl mt-4">Perguntas Frequentes</h2>
-      </div>
+    <section id="faq" className="py-24 px-[5%] bg-[#131316] border-y border-white/[0.08] scroll-mt-20">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-12">
+          <ScrollReveal>
+            <span className="text-violet-400 text-xs font-bold uppercase tracking-widest">Dúvidas</span>
+            <h2 className="font-syne font-bold text-3xl md:text-5xl mt-4">Perguntas Frequentes</h2>
+          </ScrollReveal>
+        </div>
 
-      <div className="flex flex-col">
-        {faqData.map((item, index) => (
-          <FAQItem 
-            key={index}
-            question={item.question}
-            answer={item.answer}
-            isOpen={openIndex === index}
-            onClick={() => setOpenIndex(openIndex === index ? null : index)}
-          />
-        ))}
+        <div className="flex flex-col">
+          {faqData.map((item, index) => (
+            <ScrollReveal key={index} delay={index * 0.05} direction="fade">
+              <FAQItem 
+                question={item.question}
+                answer={item.answer}
+                isOpen={openIndex === index}
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              />
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
     </section>
   );

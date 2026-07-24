@@ -2,6 +2,7 @@
 
 import { BarChart3, Rocket, Target } from 'lucide-react';
 import FeatureCard from './FeatureCard';
+import ScrollReveal from './ScrollReveal';
 
 const featuresData = [
   {
@@ -29,15 +30,19 @@ const featuresData = [
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 px-[5%] bg-[#131316] border-y border-white/[0.08]">
+    <section id="features" className="py-24 px-[5%]">
       <div className="text-center mb-16">
-        <span className="text-blue-500 text-xs font-bold uppercase tracking-widest">Recursos</span>
-        <h2 className="font-syne font-bold text-3xl md:text-5xl mt-4">Tudo sob controle</h2>
+        <ScrollReveal>
+          <span className="text-blue-500 text-xs font-bold uppercase tracking-widest">Recursos</span>
+          <h2 className="font-syne font-bold text-3xl md:text-5xl mt-4">Tudo sob controle</h2>
+        </ScrollReveal>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {featuresData.map((feat, index) => (
-          <FeatureCard key={index} {...feat} />
+          <ScrollReveal key={index} delay={index * 0.1}>
+            <FeatureCard {...feat} />
+          </ScrollReveal>
         ))}
       </div>
     </section>
