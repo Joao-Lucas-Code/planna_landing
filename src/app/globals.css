@@ -503,8 +503,11 @@
   100% { transform: scale(1.5); opacity: 0; }
 }
 
-/* Sem movimento: nada anima e o video nunca carrega (ver HeroFlamingo.js).
-   Ficam as imagens estaticas, iluminadas por uma luz fixa. */
+/* Sem movimento: o video nao carrega, nada flutua e nao ha paralaxe nem
+   ondas. A LUZ DO CURSOR CONTINUA ATIVA de proposito — ela nao desloca
+   conteudo, responde a acao direta do usuario e e o que mantem o hero vivo
+   para quem desligou animacoes do sistema. Ver a nota de politica em
+   HeroFlamingo.js. */
 @media (prefers-reduced-motion: reduce) {
   .fl-midia { animation: none; transition: none; }
   .fl-ondas { display: none; }

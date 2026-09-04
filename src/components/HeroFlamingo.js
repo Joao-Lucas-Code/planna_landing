@@ -71,21 +71,36 @@ export default function HeroFlamingo({ className = '' }) {
     };
 
     const aplicar = () => {
+      // A luz sempre acompanha o cursor.
       palco.style.setProperty('--lx', `${atualX.toFixed(2)}%`);
       palco.style.setProperty('--ly', `${atualY.toFixed(2)}%`);
+
+      // Já o deslocamento do corpo, não.
+      if (semMovimento) {
+        palco.style.setProperty('--tilt', '0deg');
+        palco.style.setProperty('--shift', '0px');
+        palco.style.setProperty('--drift', '0px');
+        palco.style.setProperty('--fade', '1');
+        return;
+      }
+
       palco.style.setProperty('--tilt', `${((atualX - 50) / 50) * 2.2}deg`);
       palco.style.setProperty('--shift', `${((atualX - 50) / 50) * -7}px`);
       derivaDoScroll();
     };
 
-    if (semMovimento) {
-      atualX = 40;
-      atualY = 20;
-      palco.style.setProperty('--drift', '0px');
-      palco.style.setProperty('--fade', '1');
-      aplicar();
-      return;
-    }
+    // NOTA DE POLITICA — o que reduced-motion desliga aqui, e o que nao.
+    //
+    // Desliga: o loop de video, a flutuacao, a inclinacao de paralaxe, os
+    // aneis de agua e a deriva de rolagem. Tudo isso move conteudo de lugar
+    // ou toca sozinho, que e o alvo da preferencia.
+    //
+    // NAO desliga: a luz que segue o cursor. Ela nao desloca nada — muda
+    // brilho e recorte em resposta a acao direta do usuario, mais perto de
+    // um estado de hover do que de uma animacao. Cortar isso deixaria o hero
+    // inteiramente morto para quem desliga animacoes do sistema (no Windows,
+    // um unico botao em Acessibilidade > Efeitos visuais), que e um publico
+    // grande e que nao pediu para perder interatividade.
 
     const loop = () => {
       if (!vivo) return;
