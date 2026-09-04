@@ -96,11 +96,14 @@ export default function Features() {
         {/* Bento assimetrico: um card dominante + dois de apoio.
             Grade 3x3 igual era o que mais denunciava o template. */}
         <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5">
+          {/* Card dominante entra pela esquerda, os de apoio pela direita:
+              o movimento desenha a propria assimetria do bento em vez de
+              repetir o fade-up usado no resto da pagina. */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -26 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 lg:row-span-2 flex"
           >
             <FeatureCard {...principal} className="w-full">
@@ -111,12 +114,12 @@ export default function Features() {
           {secundarios.map((feat, index) => (
             <motion.div
               key={feat.index}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: 26 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{
-                duration: 0.8,
-                delay: 0.1 + index * 0.1,
+                duration: 0.9,
+                delay: 0.12 + index * 0.14,
                 ease: [0.16, 1, 0.3, 1],
               }}
               className="lg:col-span-5 flex"

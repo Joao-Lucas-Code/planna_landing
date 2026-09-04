@@ -1,6 +1,7 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
+import MotionProvider from "@/components/MotionProvider";
 import "./globals.css";
 
 // Display: Syne. Pesos 600/700/800 — 600 cobre os titulos menores.
@@ -69,7 +70,7 @@ export default function RootLayout({ children }) {
         >
           Pular para o conteúdo
         </a>
-        {children}
+        <MotionProvider>{children}</MotionProvider>
         <Analytics />
         <SpeedInsights />
       </body>

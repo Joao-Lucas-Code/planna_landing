@@ -165,13 +165,25 @@ export default function Pricing() {
 
           {/* Linhas de recursos */}
           <div className="border-t border-ink-inv/15">
+            {/* Cascata linha a linha, varrida da esquerda: gesto de tabela,
+                nao de card. O olho desce a lista na ordem em que vai le-la. */}
             {RECURSOS.map(([label, starter, pro], i) => (
-              <div
+              <motion.div
                 key={label}
-                className="grid grid-cols-[1fr_auto_auto] md:grid-cols-[1.2fr_1fr_1fr] border-b border-ink-inv/10 last:border-b-0"
+                initial={{ opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+                whileInView={{ opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{
+                  duration: 0.7,
+                  delay: i * 0.07,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="group grid grid-cols-[1fr_auto_auto] md:grid-cols-[1.2fr_1fr_1fr] border-b border-ink-inv/10 last:border-b-0 transition-colors duration-300 hover:bg-ink-inv/[0.045]"
               >
                 <div className="py-4 pr-4 md:pr-8 md:border-r border-ink-inv/15 flex items-center">
-                  <span className="text-[13px] text-ink-inv/80">{label}</span>
+                  <span className="text-[13px] text-ink-inv/80 transition-transform duration-300 group-hover:translate-x-1">
+                    {label}
+                  </span>
                 </div>
 
                 <div className="py-4 px-4 md:px-8 md:border-r border-ink-inv/15 flex items-center justify-center md:justify-start min-w-[64px]">
@@ -185,7 +197,7 @@ export default function Pricing() {
                 >
                   <Celula valor={pro} forte />
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>

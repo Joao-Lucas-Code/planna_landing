@@ -57,13 +57,9 @@ export default function Testimonials() {
 
         {/* Citacao principal em corpo de display: hierarquia real entre os
             tres depoimentos, em vez de tres cards de peso identico. */}
-        <motion.figure
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
-        >
+        {/* Citacao revelada por cortina vertical, e nao por deslocamento:
+            o texto e descoberto de cima para baixo, como quem le. */}
+        <figure className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           <span
             aria-hidden="true"
             className="hidden lg:block lg:col-span-1 font-display font-extrabold text-[5rem] leading-[0.6] text-ink-4/50 select-none"
@@ -71,16 +67,32 @@ export default function Testimonials() {
             &ldquo;
           </span>
 
-          <blockquote className="lg:col-span-8">
+          <motion.blockquote
+            className="lg:col-span-8"
+            // A opacidade acompanha o recorte de proposito. Sob
+            // prefers-reduced-motion o framer descarta o clipPath e anima
+            // so a opacidade — sem esse par, ele aplicaria o recorte inicial
+            // e nunca o animaria, deixando a citacao invisivel para sempre.
+            initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          >
             <p className="font-display font-semibold text-[1.5rem] md:text-[2rem] leading-[1.25] tracking-[-0.025em] text-ink">
               {destaque.text}
             </p>
-          </blockquote>
+          </motion.blockquote>
 
-          <figcaption className="lg:col-span-3 lg:pt-2">
+          <motion.figcaption
+            className="lg:col-span-3 lg:pt-2"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, delay: 0.75 }}
+          >
             <Assinatura {...destaque} />
-          </figcaption>
-        </motion.figure>
+          </motion.figcaption>
+        </figure>
 
         {/* Depoimentos de apoio, separados por hairline */}
         <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-px bg-hairline border-t border-hairline">

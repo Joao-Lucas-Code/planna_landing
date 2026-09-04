@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 const stats = [
   { value: 2000, decimals: 0, prefix: '', suffix: '+', label: 'Usuários na lista de espera', note: 'Beta fechado' },
@@ -67,10 +67,17 @@ export default function Stats() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         {/* Divisorias verticais em hairline substituem os cards soltos */}
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-hairline">
+          {/* Gesto proprio desta secao: a divisoria se desenha de cima para
+              baixo e o numero conta. Nada de deslocamento — a mesma entrada
+              das outras secoes anularia a leitura do contador. */}
           {stats.map((stat, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`py-12 md:py-16 ${index === 0 ? 'md:pr-10' : 'md:px-10'} ${
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: index * 0.12 }}
+              className={`relative py-12 md:py-16 ${index === 0 ? 'md:pr-10' : 'md:px-10'} ${
                 index === stats.length - 1 ? 'md:pr-0' : ''
               }`}
             >
@@ -88,7 +95,20 @@ export default function Stats() {
               <p className="mt-4 text-sm text-ink-3 leading-relaxed max-w-[22ch]">
                 {stat.label}
               </p>
-            </div>
+
+              {/* Regua de acento que cresce sob o numero */}
+              <motion.span
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{
+                  duration: 1,
+                  delay: 0.3 + index * 0.12,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="block mt-8 h-px w-16 bg-accent-soft/50 origin-left"
+              />
+            </motion.div>
           ))}
         </div>
       </div>

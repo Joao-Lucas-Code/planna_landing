@@ -17,7 +17,7 @@ export default function FeatureCard({
 }) {
   return (
     <article
-      className={`group relative flex flex-col border border-hairline bg-surface rounded-md overflow-hidden transition-colors duration-500 hover:border-ink/20 ${className}`}
+      className={`group relative flex flex-col border border-hairline bg-surface rounded-md overflow-hidden transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-ink/20 hover:-translate-y-1 hover:shadow-[0_18px_50px_-24px_rgba(0,0,0,0.9)] ${className}`}
     >
       {/* Linha de acento que percorre o topo no hover */}
       <span className="absolute top-0 left-0 h-px w-full bg-accent-soft/60 scale-x-0 origin-left transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />

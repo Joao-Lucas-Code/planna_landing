@@ -41,7 +41,11 @@ function FAQItem({ index, question, answer, isOpen, onClick }) {
           onClick={onClick}
           className="group w-full py-7 flex items-start gap-5 md:gap-8 text-left cursor-pointer"
         >
-          <span className="mono-micro text-ink-4 tabular pt-1.5 shrink-0">
+          <span
+            className={`mono-micro tabular pt-1.5 shrink-0 transition-colors duration-300 ${
+              isOpen ? 'text-accent-soft' : 'text-ink-4 group-hover:text-accent-soft'
+            }`}
+          >
             {String(index + 1).padStart(2, '0')}
           </span>
 
@@ -128,14 +132,25 @@ export default function FAQ() {
           {/* Lista */}
           <div className="lg:col-span-8 border-t border-hairline">
             {faqData.map((item, index) => (
-              <FAQItem
+              <motion.div
                 key={index}
-                index={index}
-                question={item.question}
-                answer={item.answer}
-                isOpen={openIndex === index}
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              />
+                initial={{ opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+                whileInView={{ opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{
+                  duration: 0.75,
+                  delay: index * 0.09,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+              >
+                <FAQItem
+                  index={index}
+                  question={item.question}
+                  answer={item.answer}
+                  isOpen={openIndex === index}
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                />
+              </motion.div>
             ))}
           </div>
         </div>
