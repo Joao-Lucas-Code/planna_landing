@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Check, Minus } from 'lucide-react';
+import TextoRevelado from './TextoRevelado';
 
 // Matriz unica de recursos: os dois planos sao comparados linha a linha,
 // como uma tabela — nao como dois cards soltos com listas diferentes.
@@ -82,15 +83,11 @@ export default function Pricing() {
             <span className="h-px flex-1 bg-gradient-to-r from-ink-inv/15 to-transparent" />
           </motion.div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          <TextoRevelado
             className="display-lg mt-7 measure-wide"
-          >
-            Simples e transparente
-          </motion.h2>
+            atraso={0.08}
+            segmentos={[{ texto: 'Simples e transparente' }]}
+          />
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}

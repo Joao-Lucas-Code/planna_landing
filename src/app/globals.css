@@ -333,3 +333,179 @@
     transition: none;
   }
 }
+
+/* ============================================================
+   PALCO DO FLAMINGO — iluminacao direcional reativa ao cursor.
+
+   --lx/--ly sao escritas por HeroFlamingo.js dentro de um rAF. A copia
+   iluminada e recortada por uma mascara radial nessa posicao: onde a
+   mascara e opaca, o lado claro aparece — volume, e nao brilho colado.
+
+   ATENCAO AO CONTEXTO DE EMPILHAMENTO: o fundo preto do video some por
+   mix-blend-mode: screen, e blend so enxerga o backdrop do contexto de
+   empilhamento mais proximo. Por isso `.flamingo-palco` NAO tem transform,
+   filter, opacity animada nem isolation, e o paralaxe/flutuacao vao DIRETO
+   nas midias. Um wrapper com transform aqui devolve um retangulo preto em
+   volta da ave — foi exatamente o que aconteceu numa versao anterior.
+   ============================================================ */
+
+.flamingo-palco {
+  --lx: 50%;
+  --ly: 28%;
+  --tilt: 0deg;
+  --shift: 0px;
+  --drift: 0px;
+  --fade: 1;
+  position: relative;
+  width: clamp(250px, 29vw, 415px);
+  aspect-ratio: 768 / 1168;
+  margin-inline: auto;
+}
+
+/* Cone de luz descendo do alto, acompanhando o holofote na horizontal */
+.fl-cone {
+  position: absolute;
+  left: 50%;
+  top: -30%;
+  width: 240%;
+  height: 145%;
+  transform: translateX(calc(-50% + (var(--lx) - 50%) * 0.4));
+  background: radial-gradient(
+    ellipse 27% 60% at 50% 0%,
+    rgba(255, 200, 219, 0.24),
+    rgba(255, 92, 138, 0.11) 42%,
+    transparent 72%
+  );
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Base das quatro midias (2 imagens + 2 videos).
+   translate: e transform: sao propriedades distintas e compoem entre si —
+   a flutuacao usa translate, o paralaxe usa transform, sem colidirem. */
+.fl-midia {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transform: translate(var(--shift), var(--drift)) rotate(var(--tilt));
+  transform-origin: 50% 94%;
+  opacity: var(--fade);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  animation: flFlutua 7s ease-in-out infinite;
+}
+
+/* Versao na sombra: rebaixada e dessaturada */
+.fl-sombra {
+  filter: brightness(0.36) saturate(0.62) contrast(1.05);
+}
+
+/* Versao iluminada: so existe onde a mascara deixa. E o efeito inteiro. */
+.fl-luz {
+  filter: brightness(1.14) saturate(1.12) contrast(1.02)
+    drop-shadow(0 0 26px rgba(255, 92, 138, 0.34));
+  -webkit-mask-image: radial-gradient(
+    ellipse 52% 34% at var(--lx) var(--ly),
+    #000 0%,
+    rgba(0, 0, 0, 0.76) 38%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    ellipse 52% 34% at var(--lx) var(--ly),
+    #000 0%,
+    rgba(0, 0, 0, 0.76) 38%,
+    transparent 72%
+  );
+}
+
+/* Troca imagem -> video quando as duas trilhas estao tocando */
+.fl-video { opacity: 0; }
+.flamingo-palco.tem-video .fl-video { opacity: var(--fade); }
+.flamingo-palco.tem-video .fl-estatico { opacity: 0; }
+
+/* Reflexo no piso molhado */
+.fl-reflexo {
+  position: absolute;
+  inset: 0;
+  top: 88%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scaleY(-0.3);
+  transform-origin: top;
+  opacity: calc(0.17 * var(--fade));
+  /* Desfoque alto de proposito: um reflexo nitido demais vira uma segunda
+     ave de cabeca para baixo. O objetivo e sugerir piso molhado. */
+  filter: blur(7px) brightness(0.5) saturate(0.7);
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 55%);
+  mask-image: linear-gradient(to bottom, #000, transparent 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Poca de luz no piso */
+.fl-poca {
+  position: absolute;
+  left: 50%;
+  bottom: 1%;
+  width: 150%;
+  height: 12%;
+  transform: translateX(calc(-50% + (var(--lx) - 50%) * 0.3));
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(255, 150, 182, 0.34),
+    rgba(255, 92, 138, 0.12) 46%,
+    transparent 72%
+  );
+  filter: blur(14px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Aneis de agua */
+.fl-ondas {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: 140%;
+  height: 8%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fl-ondas span {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border: 1px solid rgba(255, 143, 176, 0.15);
+  border-radius: 50%;
+  animation: flOnda 6s ease-out infinite;
+}
+
+.fl-ondas span:nth-child(2) { animation-delay: 2s; }
+.fl-ondas span:nth-child(3) { animation-delay: 4s; }
+
+@keyframes flFlutua {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -9px; }
+}
+
+@keyframes flOnda {
+  0%   { transform: scale(0.3); opacity: 0; }
+  22%  { opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Sem movimento: nada anima e o video nunca carrega (ver HeroFlamingo.js).
+   Ficam as imagens estaticas, iluminadas por uma luz fixa. */
+@media (prefers-reduced-motion: reduce) {
+  .fl-midia { animation: none; transition: none; }
+  .fl-ondas { display: none; }
+}

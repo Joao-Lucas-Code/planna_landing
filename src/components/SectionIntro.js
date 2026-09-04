@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import TextoRevelado from './TextoRevelado';
 
 /**
  * Cabecalho padrao de secao: indice numerado + regua + titulo.
@@ -38,16 +39,14 @@ export default function SectionIntro({
         {!centered && <span className="h-px flex-1 rule-fade" />}
       </motion.div>
 
-      {/* Titulo */}
-      <motion.h2
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+      {/* Titulo — revelacao por palavra, nao o mesmo fade-up das outras
+          secoes. Gesto repetido em toda secao para de ser lido como
+          movimento; a cascata acompanha a direcao da leitura. */}
+      <TextoRevelado
         className="display-lg text-ink mt-7 measure-wide"
-      >
-        {title}
-      </motion.h2>
+        atraso={0.08}
+        segmentos={[{ texto: title }]}
+      />
 
       {description && (
         <motion.p

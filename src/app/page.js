@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import ProductPreview from '@/components/ProductPreview';
 import Stats from '@/components/Stats';
 import Features from '@/components/Features';
 import Testimonials from '@/components/Testimonials';
@@ -15,10 +16,11 @@ export default function Home() {
 
       {/* Ritmo das secoes — alterna a superficie para a pagina nao virar
           um bloco escuro continuo:
-          hero (canvas) → stats (surface) → features (canvas)
+          hero (canvas) → produto (canvas) → stats (surface) → features (canvas)
           → depoimentos (surface) → precos (PAPEL CLARO)
           → faq (canvas) → cta (canvas texturizado) */}
       <Hero />
+      <ProductPreview />
       <Stats />
       <Features />
       <Testimonials />

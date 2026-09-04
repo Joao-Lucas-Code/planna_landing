@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import TextoRevelado from './TextoRevelado';
 
 const faqData = [
   {
@@ -105,15 +106,11 @@ export default function FAQ() {
                 <span className="mono-label text-ink-3">Dúvidas</span>
               </motion.div>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              <TextoRevelado
                 className="display-lg text-ink mt-7"
-              >
-                Perguntas frequentes
-              </motion.h2>
+                atraso={0.08}
+                segmentos={[{ texto: 'Perguntas frequentes' }]}
+              />
 
               <p className="mt-5 text-ink-3 text-sm leading-relaxed max-w-[32ch]">
                 Não achou o que procurava? Escreva para{' '}
