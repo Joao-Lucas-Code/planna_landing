@@ -2,31 +2,30 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Stats from '@/components/Stats';
 import Features from '@/components/Features';
+import Testimonials from '@/components/Testimonials';
 import Pricing from '@/components/Pricing';
 import FAQ from '@/components/FAQ';
 import LeadForm from '@/components/LeadForm';
 import Footer from '@/components/Footer';
-import FloatingOrbs from '@/components/FloatingOrbs';
-import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   return (
-    <main className="bg-[#09090B] min-h-screen text-white">
-      {/* Elementos fixos de fundo e navegação */}
-      <FloatingOrbs />
+    <main className="bg-canvas min-h-screen text-ink">
       <Navbar />
-      
-      {/* Conteúdo da página - A ordem aqui define o que aparece primeiro */}
-      <div className="relative z-10">
-        <Hero />          {/* PRECISA SER O PRIMEIRO */}
-        <Stats />         {/* Números de prova social com contagem animada */}
-        <Features />      {/* Seção "Tudo sob controle" */}
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-        <LeadForm />     {/* CTA final: capturar e-mail (antes do footer) */}
-      </div>
-      
+
+      {/* Ritmo das secoes — alterna a superficie para a pagina nao virar
+          um bloco escuro continuo:
+          hero (canvas) → stats (surface) → features (canvas)
+          → depoimentos (surface) → precos (PAPEL CLARO)
+          → faq (canvas) → cta (canvas texturizado) */}
+      <Hero />
+      <Stats />
+      <Features />
+      <Testimonials />
+      <Pricing />
+      <FAQ />
+      <LeadForm />
+
       <Footer />
     </main>
   );

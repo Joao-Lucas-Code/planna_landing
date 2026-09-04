@@ -1,21 +1,32 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
+// Display: Syne. Pesos 600/700/800 — 600 cobre os titulos menores.
 const syne = Syne({
   subsets: ["latin"],
   variable: "--font-syne",
-  weight: ["700", "800"], // Pesos pesados para o título
+  weight: ["600", "700", "800"],
+  display: "swap",
 });
 
+// Texto corrido
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm",
   weight: ["400", "500"],
+  display: "swap",
 });
 
-// AQUI ESTÁ A MÁGICA DO SEO E DOS FAVICONS
+// Microtexto: eyebrows, indices de secao, labels de dado
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono-ui",
+  weight: ["400", "500"],
+  display: "swap",
+});
+
 export const metadata = {
   title: 'Planna.IA - Gestão Financeira com IA | NovaFlow',
   description: 'O Planna.IA analisa seus gastos, otimiza seus investimentos e entrega insights em tempo real com inteligência artificial. Um produto da NovaFlow.',
@@ -39,12 +50,26 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: '#08080A',
+  colorScheme: 'dark',
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className={`${syne.variable} ${dmSans.variable}`}>
-      <body className="bg-[#09090B] text-white antialiased font-dm">
+    <html
+      lang="pt-BR"
+      className={`${syne.variable} ${dmSans.variable} ${mono.variable}`}
+    >
+      <body className="bg-canvas text-ink antialiased">
+        {/* Pula direto para o conteudo — navegacao por teclado */}
+        <a
+          href="#hero"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-ink focus:text-ink-inv focus:px-4 focus:py-2 focus:rounded-sm focus:text-sm"
+        >
+          Pular para o conteúdo
+        </a>
         {children}
-        {/* Componentes da Vercel para monitoramento de tráfego e velocidade */}
         <Analytics />
         <SpeedInsights />
       </body>

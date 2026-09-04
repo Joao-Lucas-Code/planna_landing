@@ -1,8 +1,9 @@
 'use client';
+
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
-import ScrollReveal from './ScrollReveal';
+import { motion } from 'framer-motion';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -13,8 +14,7 @@ export default function LeadForm() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  
-  // Instanciando o roteador do Next.js
+
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -55,35 +55,106 @@ export default function LeadForm() {
   };
 
   return (
-    <section id="waitlist" className="py-32 px-[5%] flex justify-center scroll-mt-20">
-      <div className="w-full max-w-xl bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.08] p-8 md:p-12 rounded-3xl text-center relative overflow-hidden">
-        <div className="absolute -top-24 -left-24 w-48 h-48 bg-purple-500/10 blur-[80px] rounded-full pointer-events-none" />
-        <ScrollReveal>
-          <h2 className="font-syne font-bold text-2xl md:text-4xl mb-4 text-white">Garanta seu lugar</h2>
-          <p className="text-gray-400 mb-8 text-sm md:text-base font-dm">
-            Seja o primeiro a saber quando a Planna.IA for lançada e garanta seus <span className="text-white font-bold">14 dias grátis</span>.
-          </p>
-        </ScrollReveal>
-        <ScrollReveal delay={0.2} direction="fade">
-          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 relative z-10">
-          <input 
-            type="email" 
-            placeholder="Seu melhor e-mail" 
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-white outline-none focus:border-violet-500 transition-all font-dm"
-          />
-          <button 
-            type="submit" 
-            disabled={loading}
-            className="bg-gradient-to-r from-blue-500 to-violet-500 px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform disabled:opacity-50 text-white shadow-lg shadow-violet-500/10"
+    <section
+      id="waitlist"
+      className="relative overflow-hidden border-t border-hairline grain scroll-mt-20"
+    >
+      <div className="absolute inset-0 blueprint opacity-60 pointer-events-none" />
+      <div className="absolute inset-0 vignette pointer-events-none" />
+
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-10 py-32 md:py-48">
+        <div className="max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3"
           >
-            {loading ? 'Enviando...' : 'Entrar na lista'}
-          </button>
-          </form>
-        </ScrollReveal>
-        {message && <p className="mt-4 text-xs font-medium text-purple-400 animate-fade-in font-dm">{message}</p>}
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-soft" />
+            <span className="mono-micro text-ink-3">
+              Vagas limitadas para o beta
+            </span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="display-xl text-ink mt-8"
+          >
+            Garanta seu lugar
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-8 text-lg text-ink-2 leading-relaxed measure"
+          >
+            Seja o primeiro a saber quando o Planna.IA for lançado e garanta seus{' '}
+            <span className="text-ink">14 dias grátis</span> — sem cartão de
+            crédito.
+          </motion.p>
+
+          {/* Campo sublinhado, sem caixa arredondada. */}
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.9, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            onSubmit={handleSubmit}
+            className="mt-14 max-w-xl"
+          >
+            <label htmlFor="email-waitlist" className="mono-micro text-ink-4">
+              Endereço de e-mail
+            </label>
+
+            <div className="group mt-4 flex items-center gap-4 border-b border-hairline focus-within:border-accent-soft transition-colors duration-500 pb-3">
+              <input
+                id="email-waitlist"
+                type="email"
+                placeholder="voce@empresa.com"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1 min-w-0 bg-transparent text-ink text-base md:text-lg placeholder:text-ink-4 outline-none focus-visible:outline-none"
+              />
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="shrink-0 inline-flex items-center gap-2.5 text-ink disabled:opacity-40 disabled:cursor-wait cursor-pointer group/btn"
+              >
+                <span className="mono-micro">
+                  {loading ? 'Enviando' : 'Entrar'}
+                </span>
+                <span className="w-9 h-9 rounded-full border border-hairline group-hover/btn:border-accent-soft group-hover/btn:bg-accent/10 flex items-center justify-center transition-all duration-400">
+                  <span className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-0.5">
+                    →
+                  </span>
+                </span>
+              </button>
+            </div>
+
+            {/* Mensagem de erro/estado — anunciada por leitores de tela */}
+            <p
+              aria-live="polite"
+              className={`mt-4 text-[13px] transition-opacity duration-300 ${
+                message ? 'opacity-100 text-accent-soft' : 'opacity-0'
+              }`}
+            >
+              {message || ' '}
+            </p>
+
+            <p className="mt-6 mono-micro text-ink-4 leading-relaxed">
+              Sem spam · Cancele quando quiser · Acesso read-only
+            </p>
+          </motion.form>
+        </div>
       </div>
     </section>
   );

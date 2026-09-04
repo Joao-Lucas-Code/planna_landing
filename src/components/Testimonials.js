@@ -1,75 +1,113 @@
 'use client';
 
-import { Star } from 'lucide-react';
-import ScrollReveal from './ScrollReveal';
+import { motion } from 'framer-motion';
+import SectionIntro from './SectionIntro';
+
+const testimonials = [
+  {
+    name: 'Cauã',
+    role: 'Beta Tester',
+    initial: 'C',
+    text: 'A interface é absurdamente intuitiva. Em dois minutos a IA já tinha categorizado todos os meus gastos do mês sem eu precisar criar planilhas complexas.',
+  },
+  {
+    name: 'Mariana',
+    role: 'Early Access',
+    initial: 'M',
+    text: 'Finalmente um app que não só mostra para onde meu dinheiro foi, mas me avisa antes de eu gastar demais. A notificação de meta me salvou esse mês!',
+  },
+  {
+    name: 'Rafaela',
+    role: 'Beta Tester',
+    initial: 'R',
+    text: 'Eu usava três apps diferentes para acompanhar contas e investimentos. O Planna.IA unificou tudo e os insights da inteligência artificial são muito precisos.',
+  },
+];
+
+/** Assinatura: monograma em quadrado hairline. Sem circulo com gradiente. */
+function Assinatura({ initial, name, role }) {
+  return (
+    <div className="flex items-center gap-3.5">
+      <span className="w-9 h-9 rounded-sm border border-hairline bg-raised flex items-center justify-center font-display font-bold text-[13px] text-ink-2 shrink-0">
+        {initial}
+      </span>
+      <div className="min-w-0">
+        <div className="text-sm text-ink font-medium leading-tight">{name}</div>
+        <div className="mono-micro text-ink-4 mt-1">{role}</div>
+      </div>
+    </div>
+  );
+}
 
 export default function Testimonials() {
-  const testimonials = [
-    {
-      name: "Cauã",
-      role: "Beta Tester",
-      text: "A interface é absurdamente intuitiva. Em dois minutos a IA já tinha categorizado todos os meus gastos do mês sem eu precisar criar planilhas complexas.",
-      initial: "C"
-    },
-    {
-      name: "Mariana",
-      role: "Early Access",
-      text: "Finalmente um app que não só mostra para onde meu dinheiro foi, mas me avisa antes de eu gastar demais. A notificação de meta me salvou esse mês!",
-      initial: "M"
-    },
-    {
-      name: "Rafaela",
-      role: "Beta Tester",
-      text: "Eu usava três apps diferentes para acompanhar contas e investimentos. O Planna.IA unificou tudo e os insights da inteligência artificial são muito precisos.",
-      initial: "R"
-    }
-  ];
+  const [destaque, ...resto] = testimonials;
 
   return (
-    <section id="testimonials" className="py-24 px-[5%] bg-[#131316] border-y border-white/[0.08]">
-      <div className="max-w-6xl mx-auto">
-        
-        <div className="text-center mb-16">
-          <ScrollReveal>
-            <span className="text-blue-500 text-xs font-bold uppercase tracking-widest">Prova Social</span>
-            <h2 className="font-syne font-bold text-3xl md:text-5xl mt-4 mb-4">O que dizem os primeiros usuários</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto font-dm">
-              Veja o que as pessoas que já tiveram acesso antecipado estão achando do nosso agente financeiro.
-            </p>
-          </ScrollReveal>
-        </div>
+    <section
+      id="testimonials"
+      className="relative py-28 md:py-40 border-y border-hairline bg-surface scroll-mt-20"
+    >
+      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        <SectionIntro
+          index="02"
+          eyebrow="Prova social"
+          title="O que dizem os primeiros usuários"
+          description="Quem já teve acesso antecipado ao agente financeiro — sem roteiro, sem filtro."
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((item, index) => (
-            <div 
-              key={index} 
-              className="p-8 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.06] transition-colors"
+        {/* Citacao principal em corpo de display: hierarquia real entre os
+            tres depoimentos, em vez de tres cards de peso identico. */}
+        <motion.figure
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+        >
+          <span
+            aria-hidden="true"
+            className="hidden lg:block lg:col-span-1 font-display font-extrabold text-[5rem] leading-[0.6] text-ink-4/50 select-none"
+          >
+            &ldquo;
+          </span>
+
+          <blockquote className="lg:col-span-8">
+            <p className="font-display font-semibold text-[1.5rem] md:text-[2rem] leading-[1.25] tracking-[-0.025em] text-ink">
+              {destaque.text}
+            </p>
+          </blockquote>
+
+          <figcaption className="lg:col-span-3 lg:pt-2">
+            <Assinatura {...destaque} />
+          </figcaption>
+        </motion.figure>
+
+        {/* Depoimentos de apoio, separados por hairline */}
+        <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-px bg-hairline border-t border-hairline">
+          {resto.map((item, index) => (
+            <motion.figure
+              key={item.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.12,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="bg-surface pt-9 pb-2 md:px-8 md:first:pl-0"
             >
-              <ScrollReveal delay={index * 0.15}>
-                <div className="flex gap-1 mb-6 text-violet-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
-                  ))}
-                </div>
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed font-dm mb-8 italic">
-                  "{item.text}"
+              <blockquote>
+                <p className="text-[15px] text-ink-2 leading-relaxed max-w-[46ch]">
+                  {item.text}
                 </p>
-              </ScrollReveal>
-              <ScrollReveal delay={index * 0.15 + 0.2} direction="fade">
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white font-bold font-syne shrink-0">
-                    {item.initial}
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold text-sm">{item.name}</h4>
-                    <p className="text-gray-500 text-xs">{item.role}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
+              </blockquote>
+              <figcaption className="mt-8">
+                <Assinatura {...item} />
+              </figcaption>
+            </motion.figure>
           ))}
         </div>
-
       </div>
     </section>
   );

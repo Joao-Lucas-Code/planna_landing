@@ -1,54 +1,285 @@
 @import "tailwindcss";
 
-/* ------------------------------------------------------------
-   PLANNA.IA — GLOBAL STYLES (Tailwind v4)
-   ------------------------------------------------------------ */
+/* ============================================================
+   PLANNA.IA — DESIGN SYSTEM
+   Tailwind v4: os tokens vivem em @theme e viram utilitarios
+   automaticamente (bg-canvas, text-ink, font-display, ease-out-expo...).
+   NAO existe tailwind.config.mjs em uso — o v4 so o leria via @config.
+   ============================================================ */
+
+@theme {
+  /* --- Tipografia --------------------------------------------------- */
+  --font-display: var(--font-syne), "Syne", sans-serif;
+  --font-sans: var(--font-dm), "DM Sans", system-ui, sans-serif;
+  --font-mono: var(--font-mono-ui), "JetBrains Mono", ui-monospace, monospace;
+
+  /* --- Superficies --------------------------------------------------- */
+  --color-canvas: #08080A;
+  --color-surface: #0D0D10;
+  --color-raised: #131317;
+  --color-paper: #F4F3F0;
+  --color-paper-dim: #E6E4DF;
+
+  /* --- Tinta --------------------------------------------------------- */
+  --color-ink: #FAFAFA;
+  --color-ink-2: #A1A1AA;
+  --color-ink-3: #6B6B75;
+  --color-ink-4: #3F3F46;
+  --color-ink-inv: #0A0A0C;
+  --color-ink-inv-2: #55555E;
+
+  /* --- Acento (usado com parcimonia) --------------------------------- */
+  --color-accent: #8B5CF6;
+  --color-accent-soft: #A78BFA;
+  --color-accent-deep: #5B21B6;
+  --color-positive: #10B981;
+  --color-negative: #F87171;
+
+  /* --- Linhas -------------------------------------------------------- */
+  --color-hairline: rgba(255, 255, 255, 0.09);
+  --color-hairline-2: rgba(255, 255, 255, 0.055);
+  --color-hairline-inv: rgba(10, 10, 12, 0.14);
+
+  /* --- Raios --------------------------------------------------------- */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* --- Curvas de animacao -------------------------------------------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
 
 @layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: #09090B;
-    color: white;
-    /* Garante que a fonte DM Sans seja a padrão */
-    font-family: var(--font-dm), sans-serif;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "kern" 1, "liga" 1;
     overflow-x: hidden;
   }
+
+  /* Numeros sempre alinhados na vertical — detalhe de produto financeiro */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  /* Foco visivel e consistente na pagina inteira */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-soft);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
 }
+
+/* ============================================================
+   TIPOGRAFIA DE DISPLAY
+   O tracking negativo cresce junto com o corpo (correcao optica).
+   ============================================================ */
+
+@layer components {
+  /* Statement de largura total (CTA final, pagina de obrigado) */
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.75rem, 7.4vw, 6.25rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+  }
+
+  /* Hero: vive numa coluna de ~6/12, entao a escala e menor que a do
+     display-xl — senao o titulo estoura por cima do mockup. */
+  .display-hero {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.375rem, 4.1vw, 3.75rem);
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+  }
+
+  .display-lg {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .display-md {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .display-sm {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  /* Microtexto em mono — eyebrows, indices, labels de dado */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .mono-micro {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Medida de leitura controlada */
+  .measure {
+    max-width: 34rem;
+  }
+
+  .measure-wide {
+    max-width: 46rem;
+  }
+}
+
+/* ============================================================
+   TEXTURA — grao + grade fina.
+   Substitui as orbs borradas: profundidade sem "glow de template".
+   ============================================================ */
 
 @layer utilities {
-  /* --- EFEITOS 3D (FLIP CARDS) --- */
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
-  .rotate-y-180 {
-    transform: rotateY(180deg);
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* --- ANIMAÇÃO DE REVELAÇÃO (REVEAL) --- */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  /* Grade tecnica de fundo, quase subliminar */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 88px 88px;
   }
 
-  /* DELAYS PARA ESCADINHA (STAGGER) */
-  .delay-100 { animation-delay: 100ms; }
-  .delay-200 { animation-delay: 200ms; }
-  .delay-300 { animation-delay: 300ms; }
-  .delay-400 { animation-delay: 400ms; }
-  .delay-500 { animation-delay: 500ms; }
-  .delay-600 { animation-delay: 600ms; }
-  .delay-700 { animation-delay: 700ms; }
-  .delay-800 { animation-delay: 800ms; }
-  .delay-1000 { animation-delay: 1000ms; }
+  /* Vinheta radial: foca o centro, escurece as bordas */
+  .vignette {
+    background: radial-gradient(
+      ellipse 76% 58% at 50% 30%,
+      rgba(139, 92, 246, 0.1),
+      transparent 72%
+    );
+  }
+
+  /* Regua horizontal que some na ponta — usada nos eyebrows */
+  .rule-fade {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.09) 0%,
+      rgba(255, 255, 255, 0.09) 55%,
+      transparent 100%
+    );
+  }
+
+  .hairline-t { border-top: 1px solid rgba(255, 255, 255, 0.09); }
+  .hairline-b { border-bottom: 1px solid rgba(255, 255, 255, 0.09); }
+  .hairline-l { border-left: 1px solid rgba(255, 255, 255, 0.09); }
+  .hairline-r { border-right: 1px solid rgba(255, 255, 255, 0.09); }
 }
 
-/* --- DEFINIÇÃO DA ANIMAÇÃO REVEAL --- */
+/* ============================================================
+   MOVIMENTO
+   Curto, deslocamento pequeno. Sem bounce, sem scale grande.
+   ============================================================ */
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: reveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .d-1 { animation-delay: 70ms; }
+  .d-2 { animation-delay: 140ms; }
+  .d-3 { animation-delay: 210ms; }
+  .d-4 { animation-delay: 300ms; }
+  .d-5 { animation-delay: 400ms; }
+  .d-6 { animation-delay: 520ms; }
+  .d-7 { animation-delay: 660ms; }
+
+  /* Revelacao do grafico do dashboard, da esquerda para a direita.
+     O estado FINAL e o padrao e a animacao so e adicionada quando ha
+     permissao para movimento — assim nada fica cortado pela metade se a
+     animacao nao rodar. Em CSS, e nao no framer, para o markup ser
+     deterministico no SSR (sem mismatch de hidratacao). */
+  .chart-draw {
+    clip-path: inset(0 0 0 0);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .chart-draw {
+      animation: chartDraw 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+    }
+  }
+
+  /* Sublinhado que cresce a partir da esquerda */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
 @keyframes reveal {
   to {
     opacity: 1;
@@ -56,95 +287,41 @@
   }
 }
 
-/* --- ANIMAÇÃO DAS ORBS (FUNDO) --- */
-@keyframes orbFloat {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(var(--dx), var(--dy)) scale(1.05); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-/* ------------------------------------------------------------
-   HERO ORBIT — objeto abstrato CSS puro (estilo Resend)
-   3 aneis inclinados (rotateX) girando em velocidades/sentidos
-   diferentes + nucleo de glow difuso. Sem libs, sem JS.
-   Os aneis usam borda rgba DIRETA (sem preenchimento) — o truque
-   padding-box criava um disco escuro ("buraco") atras do titulo.
-   ------------------------------------------------------------ */
-.hero-orbit {
-  position: absolute;
-  top: 6%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(260px, 42vw, 540px);
-  height: clamp(260px, 42vw, 540px);
-  pointer-events: none;
-  z-index: 0;
-  animation: orbitFloat 9s ease-in-out infinite;
+@keyframes chartDraw {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
 }
 
-/* Nucleo: glow bem difuso azul→roxo, sem forma definida */
-.orbit-core {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 45%;
-  height: 45%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 40% 35%,
-    rgba(139, 92, 246, 0.28),
-    rgba(59, 130, 246, 0.10) 55%,
-    transparent 70%
-  );
-  filter: blur(30px);
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-/* Aneis: apenas a borda, sem fundo — o interior fica transparente.
-   rotateX(68deg) da o efeito de orbital 3D; o spin e no eixo Z. */
-.orbit-ring {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  border-radius: 50%;
-  border: 1px solid rgba(139, 92, 246, 0.18);
-  transform: rotateX(68deg);
-  animation: orbitSpin 18s linear infinite;
+.marquee-track {
+  animation: marquee 46s linear infinite;
 }
 
-.orbit-ring-1 {
-  width: 55%;
-  height: 55%;
-  border-color: rgba(59, 130, 246, 0.20);
-}
-
-.orbit-ring-2 {
-  width: 76%;
-  height: 76%;
-  border-color: rgba(139, 92, 246, 0.16);
-  animation-duration: 26s;
-  animation-direction: reverse;
-}
-
-.orbit-ring-3 {
-  width: 100%;
-  height: 100%;
-  border-color: rgba(250, 250, 250, 0.10);
-  animation-duration: 34s;
-}
-
-@keyframes orbitSpin {
-  from { transform: rotateX(68deg) rotate(0deg); }
-  to   { transform: rotateX(68deg) rotate(360deg); }
-}
-
-@keyframes orbitFloat {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(-16px); }
-}
-
-/* Acessibilidade: desliga as animacoes para quem prefere menos movimento */
+/* Respeita quem pediu menos movimento.
+   Importante: NAO usar um reset universal com !important aqui. Ele congela
+   transicoes dirigidas por JS no meio do caminho (o framer-motion aplica
+   transition inline), o que deixava o grafico do dashboard permanentemente
+   cortado pela metade. Desligamos so as animacoes decorativas proprias,
+   sempre deixando o estado FINAL como padrao. */
 @media (prefers-reduced-motion: reduce) {
-  .hero-orbit,
-  .orbit-ring {
+  html { scroll-behavior: auto; }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
     animation: none;
+  }
+
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
+
+  .link-underline::after {
+    transition: none;
   }
 }

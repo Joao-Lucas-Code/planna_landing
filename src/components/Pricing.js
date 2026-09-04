@@ -1,87 +1,201 @@
 'use client';
 
-import { Check } from 'lucide-react';
-import ScrollReveal from './ScrollReveal';
+import { motion } from 'framer-motion';
+import { Check, Minus } from 'lucide-react';
+
+// Matriz unica de recursos: os dois planos sao comparados linha a linha,
+// como uma tabela — nao como dois cards soltos com listas diferentes.
+const RECURSOS = [
+  ['Contas conectadas', '1 conta', 'Ilimitadas'],
+  ['Categorização automática', true, true],
+  ['Relatórios mensais', true, true],
+  ['IA avançada de insights', false, true],
+  ['Alertas preditivos', false, true],
+  ['Análise de investimentos', false, true],
+];
+
+const PLANOS = [
+  {
+    name: 'Starter',
+    price: 'Grátis',
+    period: 'para sempre',
+    desc: 'Ideal para quem está começando a organizar as contas.',
+    cta: 'Começar agora',
+    featured: false,
+  },
+  {
+    name: 'Pro',
+    price: 'R$ 9,90',
+    period: '/mês',
+    desc: 'Para quem quer controle total e a IA trabalhando junto.',
+    cta: 'Teste 14 dias grátis',
+    featured: true,
+  },
+];
+
+/** Celula da matriz: texto, check ou traço. */
+function Celula({ valor, forte }) {
+  if (valor === true) {
+    return (
+      <Check
+        size={15}
+        strokeWidth={2}
+        className={forte ? 'text-accent-deep' : 'text-ink-inv/70'}
+      />
+    );
+  }
+  if (valor === false) {
+    return <Minus size={15} strokeWidth={1.5} className="text-ink-inv/25" />;
+  }
+  return (
+    <span className="text-[13px] text-ink-inv/75 tabular">{valor}</span>
+  );
+}
 
 export default function Pricing() {
   const scrollToWaitlist = () => {
-    const element = document.getElementById('waitlist');
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+    const el = document.getElementById('waitlist');
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 72;
+    window.scrollTo({ top: y, behavior: 'smooth' });
   };
 
-  const plans = [
-    {
-      name: "Starter",
-      price: "Grátis",
-      desc: "Ideal para quem está começando.",
-      features: ["1 conta conectada", "Categorização básica", "Relatórios mensais"],
-      cta: "Começar agora",
-      featured: false
-    },
-    {
-      name: "Pro",
-      price: "R$ 9,90",
-      period: "/mês",
-      desc: "Para quem quer controle total.",
-      features: ["Contas ilimitadas", "IA Avançada", "Alertas preditivos", "Análise de investimentos"],
-      cta: "Teste 14 dias grátis",
-      featured: true
-    }
-  ];
-
   return (
-    <section id="pricing" className="py-24 px-[5%] text-center">
-      <ScrollReveal>
-        <h2 className="font-syne font-bold text-3xl md:text-5xl mb-16">Simples e transparente</h2>
-      </ScrollReveal>
-      
-      <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
-        {plans.map((plan, i) => (
-          <ScrollReveal key={i} delay={i * 0.15} className="w-full max-w-xs">
-            <div 
-              className={`p-8 rounded-2xl border w-full text-left transition-transform hover:scale-105 ${
-                plan.featured 
-                  ? 'border-violet-500 bg-violet-500/5 scale-[1.02] shadow-[0_0_60px_rgba(139,92,246,0.15)]' 
-                  : 'border-white/[0.08] bg-white/[0.03]'
-              }`}
-            >
-            <span className="text-xs uppercase tracking-widest text-gray-500">{plan.name}</span>
-            <div className="font-syne font-bold text-4xl mt-4 mb-2">
-              {plan.price}
-              <span className="text-sm font-normal text-gray-500">{plan.period}</span>
+    // Secao invertida: papel claro. Quebra a monotonia do escuro e faz a
+    // oferta ser o momento mais luminoso da pagina.
+    <section
+      id="pricing"
+      className="relative bg-paper text-ink-inv py-28 md:py-40 scroll-mt-20"
+    >
+      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        {/* Cabecalho na versao clara */}
+        <div className="flex flex-col items-start">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-4 w-full"
+          >
+            <span className="mono-micro text-accent-deep tabular shrink-0">03</span>
+            <span className="mono-label text-ink-inv-2 shrink-0">Planos</span>
+            <span className="h-px flex-1 bg-gradient-to-r from-ink-inv/15 to-transparent" />
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="display-lg mt-7 measure-wide"
+          >
+            Simples e transparente
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.8, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-5 text-ink-inv-2 text-base leading-relaxed measure"
+          >
+            Sem taxa de setup, sem fidelidade e sem cartão de crédito para
+            testar. Você troca de plano quando quiser.
+          </motion.p>
+        </div>
+
+        {/* ---------- Tabela de planos ---------- */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-16 md:mt-20 border-t border-ink-inv/15"
+        >
+          {/* Cabecalho dos planos */}
+          <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr]">
+            <div className="hidden md:block border-r border-ink-inv/15 py-9 pr-8">
+              <span className="mono-micro text-ink-inv-2">Comparativo</span>
             </div>
-            <p className="text-gray-400 text-sm mb-6">{plan.desc}</p>
-            <ul className="space-y-3 mb-8">
-              {plan.features.map((f, j) => (
-                <li key={j} className="text-sm text-gray-300 flex items-center gap-2">
-                  <Check size={14} className="text-blue-500 shrink-0" /> {f}
-                </li>
-              ))}
-            </ul>
-            <button 
-              onClick={scrollToWaitlist}
-              className={`w-full py-3 rounded-xl font-bold transition-all ${
-                plan.featured 
-                  ? 'bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-lg shadow-violet-500/10' 
-                  : 'border border-white/[0.08] text-white hover:bg-white/10'
-              }`}
-            >
-              {plan.cta}
-            </button>
-            </div>
-          </ScrollReveal>
-        ))}
+
+            {PLANOS.map((plano) => (
+              <div
+                key={plano.name}
+                className={`py-9 px-0 md:px-8 border-b md:border-b-0 border-ink-inv/15 ${
+                  plano.featured
+                    ? 'bg-ink-inv/[0.035] md:border-r-0'
+                    : 'border-r border-ink-inv/15'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="mono-label text-ink-inv">{plano.name}</span>
+                  {plano.featured && (
+                    <span className="mono-micro text-accent-deep border border-accent-deep/30 rounded-full px-2 py-0.5">
+                      Recomendado
+                    </span>
+                  )}
+                </div>
+
+                <div className="mt-5 flex items-baseline gap-1.5">
+                  <span className="font-display font-bold text-[2.25rem] leading-none tracking-[-0.04em] tabular">
+                    {plano.price}
+                  </span>
+                  <span className="text-[13px] text-ink-inv-2">
+                    {plano.period}
+                  </span>
+                </div>
+
+                <p className="mt-4 text-[13px] text-ink-inv-2 leading-relaxed max-w-[30ch]">
+                  {plano.desc}
+                </p>
+
+                <button
+                  onClick={scrollToWaitlist}
+                  className={`group mt-7 w-full h-11 rounded-sm text-[0.875rem] font-medium transition-all duration-400 cursor-pointer inline-flex items-center justify-center gap-2 ${
+                    plano.featured
+                      ? 'bg-ink-inv text-paper hover:bg-accent-deep'
+                      : 'border border-ink-inv/25 text-ink-inv hover:border-ink-inv hover:bg-ink-inv/[0.04]'
+                  }`}
+                >
+                  {plano.cta}
+                  <span className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1">
+                    →
+                  </span>
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Linhas de recursos */}
+          <div className="border-t border-ink-inv/15">
+            {RECURSOS.map(([label, starter, pro], i) => (
+              <div
+                key={label}
+                className="grid grid-cols-[1fr_auto_auto] md:grid-cols-[1.2fr_1fr_1fr] border-b border-ink-inv/10 last:border-b-0"
+              >
+                <div className="py-4 pr-4 md:pr-8 md:border-r border-ink-inv/15 flex items-center">
+                  <span className="text-[13px] text-ink-inv/80">{label}</span>
+                </div>
+
+                <div className="py-4 px-4 md:px-8 md:border-r border-ink-inv/15 flex items-center justify-center md:justify-start min-w-[64px]">
+                  <Celula valor={starter} />
+                </div>
+
+                <div
+                  className={`py-4 px-4 md:px-8 flex items-center justify-center md:justify-start min-w-[64px] ${
+                    i % 2 === 0 ? 'bg-ink-inv/[0.035]' : 'bg-ink-inv/[0.02]'
+                  }`}
+                >
+                  <Celula valor={pro} forte />
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <p className="mt-8 mono-micro text-ink-inv-2">
+          Preços em BRL · Cancele quando quiser
+        </p>
       </div>
     </section>
   );
