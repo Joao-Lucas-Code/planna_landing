@@ -1,0 +1,60 @@
+<title>OG — Planna.IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    width:1200px; height:630px; overflow:hidden; position:relative;
+    background:#0B0709; font-family:'DM Sans',sans-serif;
+  }
+  /* Halo do flamingo: quente, contido — nao um glow generico */
+  .halo {
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 46% 62% at 20% 46%, rgba(255,92,138,.20), transparent 68%);
+  }
+  /* Grade tecnica, o mesmo recurso do site */
+  .grid {
+    position:absolute; inset:0; opacity:.5;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:88px 88px;
+  }
+  .wrap { position:relative; height:100%; display:flex; align-items:center; gap:76px; padding:0 100px; }
+  .mark { flex:0 0 auto; filter:drop-shadow(0 24px 60px rgba(255,92,138,.28)); }
+  h1 {
+    font-family:Syne,sans-serif; font-weight:800; font-size:94px;
+    letter-spacing:-.045em; color:#FAF7F8; line-height:1;
+  }
+  h1 span { color:#FF5C8A; }
+  .sub { margin-top:24px; font-size:31px; line-height:1.42; color:#A79AA0; max-width:19ch; }
+  .rule { margin-top:38px; width:88px; height:2px; background:#FF5C8A; }
+  .meta {
+    margin-top:26px; font-family:'JetBrains Mono',monospace; font-weight:500;
+    font-size:19px; letter-spacing:.17em; text-transform:uppercase; color:#6E626A;
+  }
+</style>
+
+<div class="halo"></div>
+<div class="grid"></div>
+
+<div class="wrap">
+  <svg class="mark" width="248" height="325" viewBox="0 0 64 84" fill="none">
+    <path d="M17 74 L17 30 C17 16 25 6 37 5 C46 4 52 9 52 15 L44 16
+             C44 12 41 10 37 11 C30 12 26 20 26 31
+             C34 28 45 30 50 36 C56 43 54 54 45 58
+             C38 61 31 60 26 58 L26 74 Z" fill="#FF5C8A"/>
+    <path d="M52 15 C56 17 58 22 57 26 C54 23 50 19 47 17 Z" fill="#8E1E43"/>
+    <path d="M57 26 L55.6 22.5 L58 25.5 Z" fill="#240811"/>
+    <circle cx="46.5" cy="12.5" r="1.7" fill="#240811"/>
+    <path d="M14 76 L29 76" stroke="#FF5C8A" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+
+  <div>
+    <h1>Planna<span>.IA</span></h1>
+    <p class="sub">Suas finanças em equilíbrio, com inteligência artificial.</p>
+    <div class="rule"></div>
+    <p class="meta">Open Finance · Read-only · NovaFlow</p>
+  </div>
+</div>

@@ -120,8 +120,8 @@ export default function DashboardMockup() {
                 >
                   <defs>
                     <linearGradient id="fillArea" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.26" />
-                      <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
+                      <stop offset="0%" stopColor="#FF5C8A" stopOpacity="0.26" />
+                      <stop offset="100%" stopColor="#FF5C8A" stopOpacity="0" />
                     </linearGradient>
 
                   </defs>
@@ -143,7 +143,7 @@ export default function DashboardMockup() {
                   <path
                     d={linha}
                     fill="none"
-                    stroke="#A78BFA"
+                    stroke="#FF8FB0"
                     strokeWidth="1.75"
                     strokeLinejoin="round"
                     strokeLinecap="round"

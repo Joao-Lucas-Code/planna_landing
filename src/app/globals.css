@@ -13,25 +13,33 @@
   --font-sans: var(--font-dm), "DM Sans", system-ui, sans-serif;
   --font-mono: var(--font-mono-ui), "JetBrains Mono", ui-monospace, monospace;
 
-  /* --- Superficies --------------------------------------------------- */
-  --color-canvas: #08080A;
-  --color-surface: #0D0D10;
-  --color-raised: #131317;
-  --color-paper: #F4F3F0;
-  --color-paper-dim: #E6E4DF;
+  /* --- Superficies ----------------------------------------------------
+     Pretos QUENTES, com um resto de magenta. Sobre um preto frio o rosa
+     flamingo fica estridente; sobre este ele assenta. */
+  --color-canvas: #0B0709;
+  --color-surface: #120C10;
+  --color-raised: #1A1218;
+  --color-paper: #FDF6F3;
+  --color-paper-dim: #EFE6E2;
 
   /* --- Tinta --------------------------------------------------------- */
-  --color-ink: #FAFAFA;
-  --color-ink-2: #A1A1AA;
-  --color-ink-3: #6B6B75;
-  --color-ink-4: #3F3F46;
-  --color-ink-inv: #0A0A0C;
-  --color-ink-inv-2: #55555E;
+  --color-ink: #FAF7F8;
+  --color-ink-2: #A79AA0;
+  --color-ink-3: #8A7C86;  /* 5.06:1 no canvas — passa AA em texto pequeno */
+  --color-ink-4: #6E626A;  /* 3.45:1 — SO decorativo ou texto grande */
+  --color-ink-inv: #17090F;
+  --color-ink-inv-2: #6B5560;
 
-  /* --- Acento (usado com parcimonia) --------------------------------- */
-  --color-accent: #8B5CF6;
-  --color-accent-soft: #A78BFA;
-  --color-accent-deep: #5B21B6;
+  /* --- Acento: rosa flamingo ------------------------------------------
+     accent      = uso geral sobre fundo escuro
+     accent-soft = texto pequeno (contraste maior sobre o canvas)
+     accent-deep = unico seguro sobre o papel claro
+     flamingo    = alias semantico usado pela marca (FlamingoMark) */
+  --color-accent: #FF5C8A;
+  --color-accent-soft: #FF8FB0;
+  --color-accent-deep: #B01247;
+  --color-flamingo: #FF5C8A;
+  --color-beak: #8E1E43;
   --color-positive: #10B981;
   --color-negative: #F87171;
 
@@ -202,7 +210,7 @@
   .vignette {
     background: radial-gradient(
       ellipse 76% 58% at 50% 30%,
-      rgba(139, 92, 246, 0.1),
+      rgba(255, 92, 138, 0.11),
       transparent 72%
     );
   }

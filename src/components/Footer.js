@@ -1,3 +1,5 @@
+import FlamingoMark from './FlamingoMark';
+
 const COLUNAS = [
   {
     titulo: 'Produto',
@@ -33,9 +35,11 @@ export default function Footer() {
         {/* ---------- Bloco principal ---------- */}
         <div className="grid grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 py-16 md:py-20">
           <div className="col-span-2 lg:col-span-5">
-            <div className="font-display font-extrabold text-2xl tracking-tight text-ink flex items-baseline gap-[3px]">
-              Planna
-              <span className="text-accent-soft">.IA</span>
+            <div className="flex items-center gap-3">
+              <FlamingoMark size={34} className="text-flamingo" />
+              <span className="font-display font-extrabold text-2xl tracking-tight text-ink leading-none">
+                Planna<span className="text-flamingo">.IA</span>
+              </span>
             </div>
 
             <p className="mt-5 text-sm text-ink-3 leading-relaxed max-w-[34ch]">
@@ -57,7 +61,7 @@ export default function Footer() {
 
           {COLUNAS.map((coluna) => (
             <nav key={coluna.titulo} className="lg:col-span-2">
-              <h2 className="mono-micro text-ink-4">{coluna.titulo}</h2>
+              <h2 className="mono-micro text-ink-3">{coluna.titulo}</h2>
               <ul className="mt-5 flex flex-col gap-3.5 list-none">
                 {coluna.links.map((link) => (
                   <li key={link.label}>
@@ -76,10 +80,10 @@ export default function Footer() {
 
         {/* ---------- Barra inferior ---------- */}
         <div className="border-t border-hairline py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <span className="mono-micro text-ink-4">
+          <span className="mono-micro text-ink-3">
             © 2026 NovaFlow · Todos os direitos reservados
           </span>
-          <span className="mono-micro text-ink-4">
+          <span className="mono-micro text-ink-3">
             Feito no Brasil · Open Finance / Bacen
           </span>
         </div>

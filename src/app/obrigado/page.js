@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
+import FlamingoMark from '@/components/FlamingoMark';
 
 export const metadata = {
   title: 'Acesso liberado | Planna.IA',
@@ -16,10 +17,12 @@ export default function Obrigado() {
       <header className="relative z-10 mx-auto w-full max-w-[1400px] px-6 md:px-10 py-7">
         <Link
           href="/"
-          className="font-display font-extrabold text-[0.95rem] tracking-tight text-ink flex items-baseline gap-[3px] w-fit"
+          className="flex items-center gap-2.5 w-fit"
         >
-          Planna
-          <span className="text-accent-soft">.IA</span>
+          <FlamingoMark size={20} className="text-flamingo" />
+          <span className="font-display font-extrabold text-[0.95rem] tracking-tight text-ink leading-none">
+            Planna<span className="text-flamingo">.IA</span>
+          </span>
         </Link>
       </header>
 
@@ -92,7 +95,7 @@ export default function Obrigado() {
       </div>
 
       <footer className="relative z-10 mx-auto w-full max-w-[1400px] px-6 md:px-10 py-7 border-t border-hairline">
-        <span className="mono-micro text-ink-4">
+        <span className="mono-micro text-ink-3">
           © 2026 NovaFlow · Todos os direitos reservados
         </span>
       </footer>

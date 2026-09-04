@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import FlamingoMark from './FlamingoMark';
 
 const LINKS = [
   { id: 'features', label: 'Recursos' },
@@ -42,11 +43,16 @@ export default function Navbar() {
         {/* Wordmark — solido, com ponto de acento. Sem gradiente. */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-baseline gap-[3px] font-display font-extrabold text-[0.95rem] tracking-tight text-ink cursor-pointer"
-          aria-label="Voltar ao topo"
+          className="group flex items-center gap-2.5 cursor-pointer"
+          aria-label="Planna.IA — voltar ao topo"
         >
-          Planna
-          <span className="text-accent-soft">.IA</span>
+          <FlamingoMark
+            size={20}
+            className="text-flamingo transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5"
+          />
+          <span className="font-display font-extrabold text-[0.95rem] tracking-tight text-ink leading-none">
+            Planna<span className="text-flamingo">.IA</span>
+          </span>
         </button>
 
         {/* Navegacao desktop */}

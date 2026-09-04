@@ -1,6 +1,7 @@
 'use client';
 
 import DashboardMockup from './DashboardMockup';
+import FlamingoMark from './FlamingoMark';
 
 // Instituicoes citadas no FAQ — viram uma faixa de credibilidade em vez
 // de uma barra de logos falsa.
@@ -24,6 +25,16 @@ export default function Hero() {
       {/* Camadas de fundo: grade tecnica + vinheta. Sem orbs borradas. */}
       <div className="absolute inset-0 blueprint opacity-70 pointer-events-none" />
       <div className="absolute inset-0 vignette pointer-events-none" />
+
+      {/* Flamingo em escala de marca d'agua: presenca de identidade sem
+          disputar atencao com o mockup do produto. Puramente decorativo. */}
+      <div
+        className="absolute -left-[6%] top-[6%] hidden lg:block pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        <div className="absolute inset-0 bg-flamingo/[0.13] blur-[130px] rounded-full" />
+        <FlamingoMark size={430} mono className="relative text-flamingo/[0.06]" />
+      </div>
       {/* Desvanece a grade na base para a secao seguinte nao ter costura */}
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-canvas pointer-events-none" />
 
@@ -32,9 +43,9 @@ export default function Hero() {
           {/* ---------- Coluna de texto ---------- */}
           <div className="lg:col-span-6">
             <div className="reveal flex items-center gap-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-soft" />
+              <FlamingoMark size={13} className="text-flamingo shrink-0" />
               <span className="mono-micro text-ink-3">
-                Inteligência Artificial · Open Finance
+                Suas finanças em equilíbrio
               </span>
             </div>
 
@@ -102,7 +113,7 @@ export default function Hero() {
       {/* ---------- Faixa de instituicoes ---------- */}
       <div className="relative z-10 mt-16 md:mt-24 border-y border-hairline bg-surface/40 backdrop-blur-sm">
         <div className="flex items-center">
-          <span className="mono-micro text-ink-4 px-6 md:px-10 py-4 border-r border-hairline shrink-0 hidden sm:block">
+          <span className="mono-micro text-ink-3 px-6 md:px-10 py-4 border-r border-hairline shrink-0 hidden sm:block">
             Conecta com
           </span>
           <div className="flex-1 overflow-hidden py-4 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">

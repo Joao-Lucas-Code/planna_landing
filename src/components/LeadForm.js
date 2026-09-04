@@ -108,7 +108,7 @@ export default function LeadForm() {
             onSubmit={handleSubmit}
             className="mt-14 max-w-xl"
           >
-            <label htmlFor="email-waitlist" className="mono-micro text-ink-4">
+            <label htmlFor="email-waitlist" className="mono-micro text-ink-3">
               Endereço de e-mail
             </label>
 
@@ -150,7 +150,7 @@ export default function LeadForm() {
               {message || ' '}
             </p>
 
-            <p className="mt-6 mono-micro text-ink-4 leading-relaxed">
+            <p className="mt-6 mono-micro text-ink-3 leading-relaxed">
               Sem spam · Cancele quando quiser · Acesso read-only
             </p>
           </motion.form>
