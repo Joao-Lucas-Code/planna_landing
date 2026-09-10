@@ -76,15 +76,32 @@ export default function HeroFlamingo({ className = '' }) {
   const luzRef = useRef(null);
   const [temVideo, setTemVideo] = useState(false);
 
+  // A preferencia de movimento e ESTADO, nao leitura unica na montagem.
+  //
+  // Ler uma vez parece bastar e nao basta: o CSS reavalia a media query ao
+  // vivo, mas o JS nao. Quem liga "Efeitos de animacao" no Windows com a
+  // pagina aberta via os aneis de agua voltarem a animar (CSS) enquanto a
+  // ave ficava parada para sempre (JS ja tinha decidido nao baixar o video).
+  // Sintoma exato relatado em desenvolvimento, e so um reload consertava.
+  //
+  // Comeca em `true` de proposito: o markup do servidor e o estatico, entao
+  // hidratar com "sem movimento" nao diverge. O efeito abaixo corrige logo
+  // apos a montagem.
+  const [semMovimento, setSemMovimento] = useState(true);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const ler = () => setSemMovimento(mq.matches);
+    ler();
+    mq.addEventListener('change', ler);
+    return () => mq.removeEventListener('change', ler);
+  }, []);
+
   // ---- Luz do cursor + scrub da rolagem (um rAF so) ----------------------
   useEffect(() => {
     const palco = palcoRef.current;
     const trilho = trilhoRef.current;
     if (!palco || !trilho) return;
-
-    const semMovimento = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
 
     // Alvo e valor corrente separados para a luz chegar com inercia. Luz
     // pesada parece fisica; luz colada no cursor parece cursor customizado.
@@ -183,7 +200,7 @@ export default function HeroFlamingo({ className = '' }) {
       secao.removeEventListener('pointermove', onMove);
       secao.removeEventListener('pointerleave', onLeave);
     };
-  }, []);
+  }, [semMovimento]);
 
   // ---- Carga do video ----------------------------------------------------
   useEffect(() => {
@@ -192,7 +209,9 @@ export default function HeroFlamingo({ className = '' }) {
     if (!sombra || !luz) return;
 
     // Respeita quem pediu menos movimento: sem video, ficam as imagens.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Se a preferencia mudar depois, este efeito roda de novo (ver o estado
+    // `semMovimento` acima) e o video entra sem precisar recarregar a pagina.
+    if (semMovimento) return;
 
     // `src` entra so depois da montagem — o markup do servidor nao tem video,
     // entao nao ha divergencia de hidratacao.
@@ -221,7 +240,12 @@ export default function HeroFlamingo({ className = '' }) {
       sombra.removeEventListener('canplaythrough', conferir);
       luz.removeEventListener('canplaythrough', conferir);
     };
-  }, []);
+  }, [semMovimento]);
+
+  // Derivado, e nao mais um setTemVideo(false) dentro do efeito: se a
+  // preferencia voltar para "menos movimento", a troca desliga sozinha, sem
+  // um segundo render em cascata.
+  const mostrarVideo = temVideo && !semMovimento;
 
   const midiaBase = 'fl-midia';
 
@@ -230,7 +254,7 @@ export default function HeroFlamingo({ className = '' }) {
       <div className="fl-fixo">
         <div
           ref={palcoRef}
-          className={`flamingo-palco ${temVideo ? 'tem-video' : ''}`}
+          className={`flamingo-palco ${mostrarVideo ? 'tem-video' : ''}`}
           aria-hidden="true"
         >
           <div className="fl-cone" />
