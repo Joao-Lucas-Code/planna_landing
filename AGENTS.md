@@ -99,12 +99,28 @@ Efeito colateral relacionado: a `<section id="hero">` usa **`overflow-x-clip`, n
 
 A ave vive em `.fl-trilho` (alto) com `.fl-fixo` sticky dentro. A fração do trilho já percorrida vira `currentTime` dos dois `<video>`. O clipe **nunca toca sozinho** — `play()` não é chamado em lugar nenhum.
 
-Duas coisas não óbvias, ambas medidas:
+Três coisas não óbvias, todas medidas:
 
-- **O clipe precisa de GOP curto.** `currentTime = x` faz o decoder partir do keyframe anterior. A versão antiga tinha 1 keyframe em 145 frames e cada seek custava ~148 ms no Chrome. `public/flamingo-scrub.mp4` é encodado com `-g 8`; o comando completo e o porquê estão em `scripts/prepare-flamingo.js`.
+- **O clipe precisa de GOP curto.** `currentTime = x` faz o decoder partir do keyframe anterior. A versão antiga tinha 1 keyframe em 145 frames e cada seek custava ~148 ms no Chrome. `public/flamingo-scrub.mp4` é encodado com `-g 8`, o que levou o seek para **14,4 ms na mediana / 21,2 ms no p95**. O comando completo e o porquê estão em `scripts/prepare-flamingo.js`.
 - **Seeks não podem empilhar.** O rAF só emite um novo `currentTime` quando o anterior terminou (`!v.seeking`), senão a fila cresce e a ave arrasta atrás do scroll.
+- **A preferência de movimento tem de ser observada, não lida uma vez.** O CSS reavalia a media query ao vivo; o JS não. Ler `matchMedia(...).matches` só na montagem produz um bug que parece impossível: quem liga "Efeitos de animação" no Windows com a página aberta vê os anéis d'água voltarem a animar (CSS) e a ave ficar parada para sempre (JS já decidiu não baixar o vídeo). `semMovimento` é estado com listener no `matchMedia`, e os efeitos dependem dele.
 
 `--fl-curso` em `.fl-trilho` controla quantas telas de rolagem o clipe inteiro consome. Sob `prefers-reduced-motion` o trilho **colapsa** (senão sobrariam ~2,4 telas de rolagem vazia) e a ave volta para o fluxo normal, estática.
+
+### Como medir o scrub (leia antes de tentar)
+
+`page.screenshot()` do CDP **devolve estado congelado** nessa região — sempre em headless, às vezes em headful. Ele reporta "delta 0" mesmo com o vídeo tocando, o que leva direto à conclusão errada de que a página não repinta. O sinal de que você caiu nessa: o mesmo valor de delta aparecendo como constante em comparações diferentes.
+
+Instrumentos que funcionam:
+
+- **`requestVideoFrameCallback`** — dispara quando um frame é entregue ao compositor. É a prova de que a tela recebe frames novos (3 a 8 por trecho de rolagem, no scrub normal).
+- **`drawImage(video)` + `getImageData`** — prova que o decoder entrega frames distintos.
+- **Ler `currentTime` direto do DOM** — prova que o scrub acompanha a rolagem.
+
+E dois detalhes de ambiente que já custaram horas:
+
+- Aba em **background** (`document.visibilityState === 'hidden'`, o caso da aba controlada pela extensão do Chrome quando a janela está minimizada) suspende o pipeline de mídia inteiro e não roda `requestAnimationFrame`. Vídeo fica em `readyState 0` para sempre, sem erro. Não é bug do código.
+- No puppeteer **headful**, `defaultViewport` descasa `window.innerHeight` do tamanho real da janela — e o progresso do scrub depende exatamente desse valor. Use `defaultViewport: null` com `--window-size`.
 
 ## Variáveis de ambiente
 
