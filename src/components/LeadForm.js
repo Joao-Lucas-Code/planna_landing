@@ -5,10 +5,18 @@ import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+// Cliente criado sob demanda dentro do submit: criar no modulo derrubava
+// o prerender com um erro opaco quando as env vars nao existem.
+const getSupabase = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    throw new Error(
+      'Supabase nao configurado: defina NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+    );
+  }
+  return createClient(url, key);
+};
 
 export default function LeadForm() {
   const [email, setEmail] = useState('');
@@ -20,10 +28,25 @@ export default function LeadForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Enter pode reenviar o formulario mesmo com o botao desabilitado —
+    // o estado `loading` e a unica fonte de verdade aqui.
+    if (loading) return;
+
     // Normaliza e valida antes de falar com o Supabase
     const cleanEmail = email.trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
       setMessage('Digite um e-mail válido.');
+      return;
+    }
+
+    let supabase;
+    try {
+      supabase = getSupabase();
+    } catch (err) {
+      // Configuracao ausente (env vars) — erro claro no console, mensagem
+      // amigavel na tela; sem isso, o prerender quebrava opacamente.
+      console.error(err.message);
+      setMessage('Serviço de cadastro não configurado. Tente novamente mais tarde.');
       return;
     }
 
@@ -47,7 +70,11 @@ export default function LeadForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: cleanEmail }),
-      }).catch(() => {});
+      }).catch((erro) => {
+        // Fire-and-forget de proposito: o lead ja esta salvo no Supabase,
+        // entao so registramos a falha para debug, sem bloquear nada.
+        console.warn('Falha ao enviar o e-mail de boas-vindas (ignorado de proposito).', erro);
+      });
 
       // Em vez de mostrar a mensagem, redireciona o usuário na hora!
       router.push('/obrigado');
@@ -119,6 +146,7 @@ export default function LeadForm() {
                 placeholder="voce@empresa.com"
                 required
                 autoComplete="email"
+                aria-describedby="email-waitlist-status"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 min-w-0 bg-transparent text-ink text-base md:text-lg placeholder:text-ink-4 outline-none focus-visible:outline-none"
@@ -140,8 +168,10 @@ export default function LeadForm() {
               </button>
             </div>
 
-            {/* Mensagem de erro/estado — anunciada por leitores de tela */}
+            {/* Mensagem de erro/estado — anunciada por leitores de tela e
+                ligada ao input por aria-describedby */}
             <p
+              id="email-waitlist-status"
               aria-live="polite"
               className={`mt-4 text-[13px] transition-opacity duration-300 ${
                 message ? 'opacity-100 text-accent-soft' : 'opacity-0'

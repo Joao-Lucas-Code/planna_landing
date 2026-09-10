@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import FlamingoMark from './FlamingoMark';
+import { scrollTo } from '@/lib/scrollTo';
 
 const LINKS = [
   { id: 'features', label: 'Recursos' },
@@ -23,12 +24,23 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Esc fecha o painel mobile — comportamento padrao esperado de menus.
+  // O listener so existe enquanto o painel esta aberto.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
   const scrollToSection = (id) => {
     setOpen(false);
     const el = document.getElementById(id);
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.scrollY - 72;
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    scrollTo(y);
   };
 
   return (
@@ -42,7 +54,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 h-16 flex items-center justify-between gap-8">
         {/* Wordmark — solido, com ponto de acento. Sem gradiente. */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => scrollTo(0)}
           className="group flex items-center gap-2.5 cursor-pointer"
           aria-label="Planna.IA — voltar ao topo"
         >
@@ -82,7 +94,7 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden flex flex-col justify-center gap-[5px] w-9 h-9 items-center cursor-pointer"
-            aria-label="Abrir menu"
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={open}
           >
             <span

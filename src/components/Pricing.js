@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Check, Minus } from 'lucide-react';
 import TextoRevelado from './TextoRevelado';
+import { scrollTo } from '@/lib/scrollTo';
 
 // Matriz unica de recursos: os dois planos sao comparados linha a linha,
 // como uma tabela — nao como dois cards soltos com listas diferentes.
@@ -58,7 +59,7 @@ export default function Pricing() {
     const el = document.getElementById('waitlist');
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.scrollY - 72;
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    scrollTo(y);
   };
 
   return (

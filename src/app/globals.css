@@ -329,25 +329,90 @@
     transform: none;
   }
 
+  /* O ping do Tailwind (indicador de status no footer) tambem para: o
+     estado final — o ponto verde solido — ja e o padrao no markup. */
+  .animate-ping {
+    animation: none;
+  }
+
   .link-underline::after {
     transition: none;
   }
 }
 
 /* ============================================================
-   PALCO DO FLAMINGO — iluminacao direcional reativa ao cursor.
+   PALCO DO FLAMINGO — frames percorridos pela rolagem, luz pelo cursor.
 
    --lx/--ly sao escritas por HeroFlamingo.js dentro de um rAF. A copia
    iluminada e recortada por uma mascara radial nessa posicao: onde a
    mascara e opaca, o lado claro aparece — volume, e nao brilho colado.
 
+   O TRILHO: `.fl-trilho` e alto e `.fl-fixo` e sticky dentro dele, entao a
+   ave gruda no centro da tela enquanto o trilho passa. Esse trecho grudado
+   e o curso do scrub — quem converte posicao em `currentTime` e o
+   componente. `--fl-curso` controla quantas telas de rolagem o clipe
+   inteiro ocupa; mexer aqui muda so o ritmo, nada mais.
+
    ATENCAO AO CONTEXTO DE EMPILHAMENTO: o fundo preto do video some por
    mix-blend-mode: screen, e blend so enxerga o backdrop do contexto de
-   empilhamento mais proximo. Por isso `.flamingo-palco` NAO tem transform,
-   filter, opacity animada nem isolation, e o paralaxe/flutuacao vao DIRETO
-   nas midias. Um wrapper com transform aqui devolve um retangulo preto em
-   volta da ave — foi exatamente o que aconteceu numa versao anterior.
+   empilhamento mais proximo. Por isso nem `.fl-fixo` nem `.flamingo-palco`
+   tem transform, filter, opacity animada ou isolation, e o paralaxe vai
+   DIRETO nas midias. Um wrapper com transform aqui devolve um retangulo
+   preto em volta da ave — foi exatamente o que aconteceu numa versao
+   anterior. `position: sticky` cria contexto de empilhamento mas NAO isola
+   grupo de blend; foi conferido no navegador antes de entrar.
    ============================================================ */
+
+.fl-trilho {
+  /* Quanto de rolagem o clipe inteiro consome, alem da tela grudada. */
+  --fl-curso: 140vh;
+  position: relative;
+  width: 100%;
+  height: calc(100vh + var(--fl-curso));
+}
+
+.fl-fixo {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A POCA DE FUNDO — nao e enfeite, e o que faz o blend continuar funcionando.
+
+   `position: sticky` CRIA GRUPO ISOLADO de blend. Medido no navegador, nao
+   deduzido: uma div preta com mix-blend-mode:screen dentro do sticky aparece
+   preta, e some no mesmo instante em que o sticky vira static. Ou seja, a ave
+   deixa de enxergar o fundo da pagina como backdrop e passa a enxergar o
+   interior do proprio sticky, que e transparente — e screen(preto,
+   transparente) = preto, a tarja de volta.
+
+   A saida e dar ao grupo o fundo que ele precisa: esta elipse pinta a cor do
+   canvas por baixo da ave. screen(preto, canvas) = canvas, que e exatamente a
+   cor da pagina, entao a tarja some sem emenda visivel.
+
+   A GEOMETRIA E O DETALHE QUE CUSTA CARO. O nucleo OPACO tem de conter a
+   caixa inteira do palco, cantos inclusive; se ele terminar antes, sobra um
+   retangulo mais claro em volta da ave (foi o primeiro resultado deste
+   ajuste). Como o palco e alto e estreito e a elipse e redonda, a elipse
+   precisa ser bem maior que ele: os insets negativos dao 3.2x a largura e
+   1.6x a altura, e o nucleo vai ate 80% do raio. Ancorada NO PALCO, e nao no
+   sticky, para acompanhar sozinha qualquer mudanca de tamanho. */
+.flamingo-palco::before {
+  content: "";
+  position: absolute;
+  inset: -30% -110%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    var(--color-canvas) 0%,
+    var(--color-canvas) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
 
 .flamingo-palco {
   --lx: 50%;
@@ -357,8 +422,17 @@
   --drift: 0px;
   --fade: 1;
   position: relative;
-  width: clamp(250px, 29vw, 415px);
-  aspect-ratio: 768 / 1168;
+  /* Proporcao do RECORTE da ave, nao do quadro do video. O clipe e cortado
+     na uniao do bbox da ave em todos os 145 frames (444x998), o que faz o
+     estatico e o video ocuparem o mesmo espaco. Antes o video vinha com
+     tarja preta nas laterais e a ave ENCOLHIA 15% no instante da troca. */
+  aspect-ratio: 444 / 998;
+  /* Dimensionado pela ALTURA, nao pela largura: a ave agora e o que fica
+     grudado na tela, entao ela precisa caber na viewport com folga para a
+     navbar (65px) em cima. 72vh deixa ~14vh de cada lado. O piso de 400px
+     segura a silhueta em telas baixas; o teto de 700px evita passar da
+     resolucao do clipe (998px de altura) em monitores altos. */
+  height: clamp(400px, 72vh, 700px);
   margin-inline: auto;
 }
 
@@ -396,27 +470,37 @@
   transform: translate(var(--shift), var(--drift)) rotate(var(--tilt));
   transform-origin: 50% 94%;
   opacity: var(--fade);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  /* SEM transition no transform de proposito. O rAF reescreve --shift/--tilt
+     a cada frame; uma transicao de 0.5s reinicia 60x/s e o paralaxe fica
+     arrastado. O lerp de 0.07 no componente ja e o amortecimento. A
+     transicao de opacity fica — ela so anima a troca estatico -> video. */
+  transition: opacity 0.6s ease;
   animation: flFlutua 7s ease-in-out infinite;
 }
 
-/* Versao na sombra: rebaixada e dessaturada */
+/* Versao na sombra: rebaixada e dessaturada.
+   0.5 e nao 0.36: sobre o canvas #0B0709 com blend screen, 0.36 apagava o
+   corpo a ponto de a area da ave ler como retangulo preto vazio em tamanho
+   real. Este e o piso para a silhueta nunca sumir. */
 .fl-sombra {
-  filter: brightness(0.36) saturate(0.62) contrast(1.05);
+  filter: brightness(0.5) saturate(0.62) contrast(1.05);
 }
 
 /* Versao iluminada: so existe onde a mascara deixa. E o efeito inteiro. */
 .fl-luz {
   filter: brightness(1.14) saturate(1.12) contrast(1.02)
     drop-shadow(0 0 26px rgba(255, 92, 138, 0.34));
+  /* 64%/44% e nao 52%/34%: a mascara antiga era estreita demais e deixava
+     grande parte do corpo so na versao sombra, que quase nao aparece no
+     preto do canvas. Alargar mantem o volume sem virar brilho chapado. */
   -webkit-mask-image: radial-gradient(
-    ellipse 52% 34% at var(--lx) var(--ly),
+    ellipse 64% 44% at var(--lx) var(--ly),
     #000 0%,
     rgba(0, 0, 0, 0.76) 38%,
     transparent 72%
   );
   mask-image: radial-gradient(
-    ellipse 52% 34% at var(--lx) var(--ly),
+    ellipse 64% 44% at var(--lx) var(--ly),
     #000 0%,
     rgba(0, 0, 0, 0.76) 38%,
     transparent 72%
@@ -503,12 +587,24 @@
   100% { transform: scale(1.5); opacity: 0; }
 }
 
-/* Sem movimento: o video nao carrega, nada flutua e nao ha paralaxe nem
-   ondas. A LUZ DO CURSOR CONTINUA ATIVA de proposito — ela nao desloca
+/* Sem movimento: o video nao carrega, nada flutua e nao ha paralaxe, scrub
+   nem ondas. A LUZ DO CURSOR CONTINUA ATIVA de proposito — ela nao desloca
    conteudo, responde a acao direta do usuario e e o que mantem o hero vivo
    para quem desligou animacoes do sistema. Ver a nota de politica em
-   HeroFlamingo.js. */
+   HeroFlamingo.js.
+
+   O TRILHO COLAPSA. Sem isso sobrariam ~2,4 telas de rolagem vazia no lugar
+   de uma animacao que nao vai acontecer — a ave volta para o fluxo normal e
+   a pagina encurta na mesma proporcao. */
 @media (prefers-reduced-motion: reduce) {
   .fl-midia { animation: none; transition: none; }
   .fl-ondas { display: none; }
+
+  .fl-trilho { height: auto; }
+  .fl-fixo { position: static; height: auto; }
+
+  /* A poca so existe para consertar o isolamento que o sticky cria. Sem
+     sticky nao ha isolamento, ela nao e necessaria — e atrapalha, porque no
+     fluxo normal a elipse sobe por cima da linha de dica acima da ave. */
+  .flamingo-palco::before { display: none; }
 }

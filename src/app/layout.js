@@ -29,6 +29,10 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata = {
+  // metadataBase resolve as URLs relativas (canonical, OG, twitter) contra
+  // o dominio publico — sem ele o Next advinha a origem a cada request.
+  metadataBase: new URL('https://novaflow.me'),
+  alternates: { canonical: '/' },
   title: 'Planna.IA - Gestão Financeira com IA | NovaFlow',
   description: 'O Planna.IA analisa seus gastos, otimiza seus investimentos e entrega insights em tempo real com inteligência artificial. Um produto da NovaFlow.',
   icons: {
@@ -48,6 +52,12 @@ export const metadata = {
     locale: 'pt_BR',
     type: 'website',
     images: [{ url: 'https://novaflow.me/og-image.png', width: 1200, height: 630, alt: 'Planna.IA — Gestão financeira inteligente, um produto NovaFlow' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Planna.IA - Sua gestão financeira inteligente',
+    description: 'A revolução das suas finanças chegou. Entre na lista de espera do Planna.IA, o agente financeiro com IA da NovaFlow.',
+    images: ['https://novaflow.me/og-image.png'],
   },
 };
 

@@ -2,6 +2,7 @@
 
 import HeroFlamingo from './HeroFlamingo';
 import TextoRevelado from './TextoRevelado';
+import { scrollTo } from '@/lib/scrollTo';
 
 // Instituicoes citadas no FAQ — viram uma faixa de credibilidade em vez
 // de uma barra de logos falsa.
@@ -16,12 +17,19 @@ export default function Hero() {
     const el = document.getElementById('waitlist');
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 72;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      scrollTo(y);
     }
   };
 
   return (
-    <section id="hero" className="relative overflow-hidden grain">
+    // tabIndex -1 para o skip-link do layout ("Pular para o conteudo")
+    // poder mandar o foco para ca junto com a rolagem — secao nao e
+    // focavel por padrao.
+    // overflow-x-clip e NAO overflow-hidden: `hidden` transforma a secao em
+    // contexto de rolagem e o `position: sticky` do trilho do flamingo para
+    // de grudar (a ave passa reto em vez de fixar). `clip` corta o
+    // transbordo horizontal do mesmo jeito sem criar scroll container.
+    <section id="hero" tabIndex={-1} className="relative overflow-x-clip grain">
       {/* Camadas de fundo: grade tecnica + vinheta. */}
       <div className="absolute inset-0 blueprint opacity-60 pointer-events-none" />
       <div className="absolute inset-0 vignette pointer-events-none" />
@@ -83,18 +91,23 @@ export default function Hero() {
             </button>
           </div>
 
+          {/* Convite a interagir. Vem ANTES da ave: e ele que explica o
+              trilho longo que comeca logo abaixo. Escondido onde nao ha
+              cursor — no toque nao ha luz para acender. */}
+          <p className="reveal d-7 mt-14 mono-micro text-ink-4 hidden lg:block">
+            Role para a ave se mover · mova o cursor para acender
+          </p>
+
           {/* ---------- O flamingo ---------- */}
           {/* Sem `reveal` aqui: a animacao de opacity criaria contexto de
               empilhamento e quebraria o blend. Sendo o elemento LCP, aparecer
               de imediato tambem e melhor. */}
-          <div className="mt-16 md:mt-20 w-full flex justify-center">
+          {/* mt-20 e nao um respiro qualquer: a poca de fundo do palco (ver
+              globals.css) se estende ~50px acima da caixa fixa, e com menos
+              folga ela passa por cima da linha de dica logo acima. */}
+          <div className="mt-20 w-full">
             <HeroFlamingo />
           </div>
-
-          {/* Convite discreto a interagir. Escondido onde nao ha cursor. */}
-          <p className="reveal d-7 mt-10 mono-micro text-ink-4 hidden lg:block">
-            Mova o cursor para acender
-          </p>
         </div>
       </div>
 

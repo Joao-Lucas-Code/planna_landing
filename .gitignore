@@ -34,6 +34,10 @@ yarn-error.log*
 *.pem
 .vercel
 
+# ferramentas locais e artefatos de QA manual
+.claude/
+.qa-screenshots/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

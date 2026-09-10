@@ -6,13 +6,32 @@
 // Entrada: public/flamingo.png (render bruto)  Saida: public/flamingo.webp
 //
 // O VIDEO do hero e comprimido a parte, uma unica vez, e nao precisa do
-// ffmpeg como dependencia do projeto. O comando usado foi:
+// ffmpeg como dependencia do projeto. O comando atual:
 //
-//   npx ffmpeg-static -i bruto.mp4 -an -c:v libx264 -crf 30 -preset slow //       -profile:v high -pix_fmt yuv420p -movflags +faststart //       public/flamingo-video.mp4
+//   ffmpeg -i bruto.mp4 -map 0:v:0 -an -vf "crop=444:998:186:86"
+//     -c:v libx264 -crf 30 -preset veryslow -profile:v high -pix_fmt yuv420p
+//     -g 8 -keyint_min 8 -x264-params "keyint=8:min-keyint=8:scenecut=0"
+//     -movflags +faststart public/flamingo-scrub.mp4
 //
-// 1.2 MB -> 136 KB com PSNR de 39 dB (visualmente sem perda). VP9/WebM foi
+// 1.15 MB -> 307 KB com PSNR de 39.6 dB (visualmente sem perda). VP9/WebM foi
 // testado e saiu MAIOR (288 KB) neste clipe curto, alem de nao cobrir Safari
 // antigo — por isso ficou so o H.264.
+//
+// AS DUAS PARTES QUE NAO SAO OBVIAS:
+//
+// `-g 8` (keyframe a cada 8 frames) existe porque o hero faz SCRUB: a
+// rolagem escreve `currentTime`, e cada salto obriga o decoder a partir do
+// keyframe anterior. A versao antiga tinha UM keyframe em 145 frames e cada
+// seek custava ~148 ms medidos no Chrome — inutilizavel. GOP 8 custa 2.2x em
+// bytes (138 KB -> 307 KB) e foi o meio-termo escolhido; GOP 4 daria 480 KB e
+// all-intra 835 KB, sem ganho perceptivel de fluidez.
+//
+// `crop=444:998:186:86` e a UNIAO do bounding box da ave nos 145 frames, com
+// 6 px de margem. Sem o corte o video vinha com tarja preta lateral e a ave
+// aparecia 15% menor que o .webp estatico — dava um pulo visivel no instante
+// em que o video substituia a imagem. O `aspect-ratio` de `.flamingo-palco`
+// no globals.css segue este recorte; se reencodar com outro crop, atualize
+// os dois.
 
 const sharp = require('sharp');
 const path = require('path');

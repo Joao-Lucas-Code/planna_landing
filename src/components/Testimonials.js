@@ -69,10 +69,12 @@ export default function Testimonials() {
 
           <motion.blockquote
             className="lg:col-span-8"
-            // A opacidade acompanha o recorte de proposito. Sob
-            // prefers-reduced-motion o framer descarta o clipPath e anima
-            // so a opacidade — sem esse par, ele aplicaria o recorte inicial
-            // e nunca o animaria, deixando a citacao invisivel para sempre.
+            // A opacidade acompanha o recorte de proposito. O recorte por
+            // clipPath nao desloca conteudo de lugar — so revela o que ja
+            // esta posicionado —, por isso e aceitavel sob
+            // prefers-reduced-motion (o framer so desliga transform e
+            // layout). Sem esse par, se o recorte nao animasse a citacao
+            // ficaria invisivel para sempre.
             initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
             whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
             viewport={{ once: true, margin: '-80px' }}

@@ -13,6 +13,9 @@ export default function ProductPreview() {
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        {/* Section sem titulo visual: o h2 fica so para leitores de tela —
+            toda <section> precisa de cabecalho acessivel */}
+        <h2 className="sr-only">O produto</h2>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

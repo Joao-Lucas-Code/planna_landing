@@ -18,14 +18,13 @@ function CountUp({ value, decimals = 0, prefix = '', suffix = '' }) {
   useEffect(() => {
     if (!inView) return;
 
-    // Quem pediu menos movimento recebe o valor final direto
+    // Quem pediu menos movimento recebe o valor final direto: duracao 0 faz
+    // o primeiro tick ja chegar em 100%. O setState fica dentro do rAF (e
+    // nao no corpo do efeito) para nao disparar render em cascata — regra
+    // react-hooks/set-state-in-effect.
     const reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduz) {
-      setCurrent(value);
-      return;
-    }
 
-    const duration = 1600;
+    const duration = reduz ? 0 : 1600;
     const start = performance.now();
     let raf;
 
@@ -65,6 +64,9 @@ export default function Stats() {
   return (
     <section className="relative border-y border-hairline bg-surface">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        {/* Sem titulo visual nesta faixa — o h2 so existe para leitores de
+            tela dar nome a <section> */}
+        <h2 className="sr-only">Números do beta</h2>
         {/* Divisorias verticais em hairline substituem os cards soltos */}
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-hairline">
           {/* Gesto proprio desta secao: a divisoria se desenha de cima para
